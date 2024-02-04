@@ -23,6 +23,8 @@ function createApp(database) {
     res.json({ cost });
   });
 
+  function convertDateToPlainDate(date) {}
+  
   function parseDate(dateString) {
     if (dateString) {
       return new Date(dateString);
