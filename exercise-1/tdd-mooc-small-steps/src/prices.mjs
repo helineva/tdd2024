@@ -23,7 +23,15 @@ function createApp(database) {
     res.json({ cost });
   });
 
-  function convertDateToPlainDate(date) {}
+  function convertDateToPlainDate(date) {
+    if (date) {
+      return Temporal.PlainDate.from({
+        year: date.getFullYear(),
+        month: date.getMonth() + 1,
+        day: date.getDate()
+      });
+    }
+  }
   
   function parseDate(dateString) {
     if (dateString) {
