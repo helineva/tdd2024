@@ -90,14 +90,15 @@ function createApp(database) {
   }
 
   function isHoliday(date) {
+    let datePD = convertDateToPlainDate(date);
     const holidays = database.getHolidays();
     for (let row of holidays) {
       let holiday = Temporal.PlainDate.from(row.holiday);
       if (
-        date &&
-        date.getFullYear() === holiday.year &&
-        date.getMonth() + 1 === holiday.month &&
-        date.getDate() === holiday.day
+        datePD &&
+        datePD.year === holiday.year &&
+        datePD.month === holiday.month &&
+        datePD.day === holiday.day
       ) {
         return true;
       }
