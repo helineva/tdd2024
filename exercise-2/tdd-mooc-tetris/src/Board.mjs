@@ -16,6 +16,16 @@ export class Board {
     this.board[0][1] = "X";
   }
 
+  tick() {
+    for (let i = this.height - 1; i > 0; i--) {
+      for (let j = 0; j < this.width; j++) {
+        if (this.board[i-1][j] === "X") {
+          this.board[i-1][j] = ".";
+          this.board[i][j] = "X";
+        }
+      }
+  }}
+
   toString() {
     let str = [];
     for (let i = 0; i < this.height; i++) {
