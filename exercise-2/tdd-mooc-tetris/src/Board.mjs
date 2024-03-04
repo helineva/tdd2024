@@ -29,11 +29,15 @@ export class Board {
         if (this.board[i-1][j] === "X") {
           this.board[i-1][j] = ".";
           this.board[i][j] = "X";
-          changed = true
+          changed = true;
         }
       }
     this.falling = changed;
   }}
+
+  hasFalling() {
+    return this.falling;
+  }
 
   toString() {
     let str = [];
