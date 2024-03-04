@@ -18,17 +18,17 @@ export class Board {
     if (this.falling) {
       throw new Error("already falling")
     }
-    this.board[0][1] = "X";
+    this.board[0][1] = block;
     this.falling = true;
   }
 
   tick() {
-    let changed = false
+    let changed = false;
     for (let i = this.height - 1; i > 0; i--) {
       for (let j = 0; j < this.width; j++) {
-        if (this.board[i-1][j] === "X") {
+        if (this.board[i-1][j] !== "." && this.board[i][j] === ".") {
+          this.board[i][j] = this.board[i-1][j];
           this.board[i-1][j] = ".";
-          this.board[i][j] = "X";
           changed = true;
         }
       }
