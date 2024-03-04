@@ -16,10 +16,16 @@ export class RotatingShape {
 
     rotateLeft() {
         let str = [];
+
         for (let h = 0; h < this.height; h++) {
-            for (let w = 0; w < this.width; w++) { str.push(this.shape[w][this.height - 1 - h]); }
+
+            for (let w = 0; w < this.width; w++) {
+                str.push(this.shape[w][this.height - 1 - h]);
+            }
+            
             if (h < this.height - 1) str.push("\n");
         }
+        
         return RotatingShape.fromString(str.join(""));
     }
 
