@@ -5,13 +5,11 @@ export class RotatingShape {
     }
     
     side;
-    width;
     shape;
     
     constructor(str) {
         this.shape = str.split("\n").map(s => { return s.replace(/\s+/g, ""); })
         this.side = this.shape.length;
-        this.width = this.shape[0].length;
     }
 
     rotateLeft() {
@@ -19,7 +17,7 @@ export class RotatingShape {
 
         for (let h = 0; h < this.side; h++) {
 
-            for (let w = 0; w < this.width; w++) {
+            for (let w = 0; w < this.side; w++) {
                 str.push(this.shape[w][this.side - 1 - h]);
             }
             
@@ -34,8 +32,8 @@ export class RotatingShape {
  
         for (let h = 0; h < this.side; h++) {
         
-            for (let w = 0; w < this.width; w++) {
-                str.push(this.shape[this.width - 1 - w][h]);
+            for (let w = 0; w < this.side; w++) {
+                str.push(this.shape[this.side - 1 - w][h]);
             }
         
             if (h < this.side - 1) str.push("\n");
