@@ -5,27 +5,25 @@ export class RotatingShape {
     }
     
     side;
-    height;
     width;
     shape;
     
     constructor(str) {
         this.shape = str.split("\n").map(s => { return s.replace(/\s+/g, ""); })
         this.side = this.shape.length;
-        this.height = this.shape.length;
         this.width = this.shape[0].length;
     }
 
     rotateLeft() {
         let str = [];
 
-        for (let h = 0; h < this.height; h++) {
+        for (let h = 0; h < this.side; h++) {
 
             for (let w = 0; w < this.width; w++) {
-                str.push(this.shape[w][this.height - 1 - h]);
+                str.push(this.shape[w][this.side - 1 - h]);
             }
             
-            if (h < this.height - 1) str.push("\n");
+            if (h < this.side - 1) str.push("\n");
         }
         
         return RotatingShape.fromString(str.join(""));
@@ -34,13 +32,13 @@ export class RotatingShape {
     rotateRight() {
         let str = [];
  
-        for (let h = 0; h < this.height; h++) {
+        for (let h = 0; h < this.side; h++) {
         
             for (let w = 0; w < this.width; w++) {
                 str.push(this.shape[this.width - 1 - w][h]);
             }
         
-            if (h < this.height - 1) str.push("\n");
+            if (h < this.side - 1) str.push("\n");
         }
 
         return RotatingShape.fromString(str.join(""));
