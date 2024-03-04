@@ -1,4 +1,5 @@
 export class RotatingShape {
+
     static fromString(str) {
         return new RotatingShape(str);
     }
@@ -15,10 +16,16 @@ export class RotatingShape {
 
     rotateRight() {
         let str = [];
+ 
         for (let h = 0; h < this.height; h++) {
-            for (let w = 0; w < this.width; w++) { str.push(this.shape[this.width - 1 - w][h]); }
+        
+            for (let w = 0; w < this.width; w++) {
+                str.push(this.shape[this.width - 1 - w][h]);
+            }
+        
             if (h < this.height - 1) str.push("\n");
         }
+
         return RotatingShape.fromString(str.join(""));
     }
 
