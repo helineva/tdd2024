@@ -5,6 +5,10 @@ export class Tetromino {
         return new Tetromino(RotatingShape.fromString(".T.\nTTT\n..."));
     }
 
+    static get I_SHAPE() {
+        return new Tetromino(RotatingShape.fromString(".....\n.....\nIIII.\n.....\n....."));
+    }
+
     shape;
 
     constructor(shape) {
