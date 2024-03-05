@@ -33,7 +33,16 @@ export class Tetromino {
     }
 
     rotateRight() {
-        return new Tetromino(this.shape.rotateRight());
+        let i;
+        for (i = 0; i < 4; i++) {
+            if (this.valid_orientations[(this.orientation + i + 1) % 4]) break;
+        }
+        switch (i) {
+            case 0: return new Tetromino(this.shape.rotateRight(), (this.orientation + i + 1) % 4, this.valid_orientations);
+            case 1: return new Tetromino(this.shape.rotateRight().rotateRight(), (this.orientation + i + 1) % 4, this.valid_orientations);
+            case 2: return new Tetromino(this.shape.rotateLeft(), (this.orientation + i + 1) % 4, this.valid_orientations);
+            case 3: return new Tetromino(this.shape, (this.orientation + i + 1) % 4, this.valid_orientations);
+        }
     }
 
     toString() {
