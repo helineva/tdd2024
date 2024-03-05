@@ -9,6 +9,10 @@ export class Tetromino {
         return new Tetromino(RotatingShape.fromString(".....\n.....\nIIII.\n.....\n....."), 0, [true, true, false, false]);
     }
 
+    static get O_SHAPE() {
+        return new Tetromino(RotatingShape.fromString(".OO\n.OO\n..."), 0, [true, false, false, false]);
+    }
+
     shape;
     orientation;
     valid_orientations;
