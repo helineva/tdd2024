@@ -2,24 +2,24 @@ export class Board {
   width;
   height;
   board;
-  falling;
+  isFalling;
 
   constructor(width, height) {
     this.width = width;
     this.height = height;
     this.board = [];
-    this.falling = false;
+    this.isFalling = false;
     for (let i = 0; i < this.height; i++) {
       this.board.push(Array(this.width).fill("."));
     }
   }
 
   drop(block) {
-    if (this.falling) {
+    if (this.isFalling) {
       throw new Error("already falling")
     }
     this.board[0][1] = block;
-    this.falling = true;
+    this.isFalling = true;
   }
 
   tick() {
@@ -32,11 +32,11 @@ export class Board {
           changed = true;
         }
       }
-    this.falling = changed;
+    this.isFalling = changed;
   }}
 
   hasFalling() {
-    return this.falling;
+    return this.isFalling;
   }
 
   toString() {
