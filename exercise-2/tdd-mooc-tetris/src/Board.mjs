@@ -19,6 +19,7 @@ export class Board {
 
   placeBlock(y, x) {
     let success = true;
+
     for (let j = 0; j < this.fallingBlock.shape.sideLength; j++) {
       for (let i = 0; i < this.fallingBlock.shape.sideLength; i++) {
         if (this.fallingBlock.shape.layout[j][i] !== ".") {
@@ -26,7 +27,9 @@ export class Board {
         }
       }
     }
+
     if (!success) return false;
+    
     for (let j = 0; j < this.fallingBlock.shape.sideLength; j++) {
       for (let i = 0; i < this.fallingBlock.shape.sideLength; i++) {
         if (this.fallingBlock.shape.layout[j][i] !== ".") {
@@ -36,11 +39,10 @@ export class Board {
         }
       }
     }
-    if (success) {
-      this.fallingBlockX = x;
-      this.fallingBlockY = y;
-    }
-    return success;
+    
+    this.fallingBlockX = x;
+    this.fallingBlockY = y;  
+    return true;
   }
 
   drop(block) {
