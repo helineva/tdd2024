@@ -3,6 +3,7 @@ export class Board {
   height;
   board;
   isFalling;
+  fallingBlock;
 
   constructor(width, height) {
     this.width = width;
@@ -14,11 +15,17 @@ export class Board {
     }
   }
 
+  placeBlock(y, x) {
+    this.board[y][x] = this.fallingBlock;
+    return true;
+  }
+
   drop(block) {
     if (this.isFalling) {
       throw new Error("already falling")
     }
-    this.board[0][1] = block;
+    this.fallingBlock = block
+    this.placeBlock(0, 1);
     this.isFalling = true;
   }
 
