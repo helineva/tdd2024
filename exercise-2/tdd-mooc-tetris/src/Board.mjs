@@ -18,7 +18,13 @@ export class Board {
   }
 
   placeBlock(y, x) {
-    this.board[y][x] = this.fallingBlock;
+    for (let j = 0; j < this.fallingBlock.shape.sideLength; j++) {
+      for (let i = 0; i < this.fallingBlock.shape.sideLength; i++) {
+        if (this.fallingBlock.shape.layout[j][i] !== ".") {
+          this.board[y+j][x+i] = this.fallingBlock.shape.layout[j][i];
+        }
+      }
+    }
     this.fallingBlockX = x;
     this.fallingBlockY = y;
     return true;
