@@ -29,7 +29,7 @@ export class Board {
       throw new Error("already falling")
     }
     this.fallingBlock = block;
-    this.placeBlock(0, 1);
+    this.placeBlock(0, Math.floor((this.width - block.shape.sideLength) / 2));
     this.isFalling = true;
   }
 
