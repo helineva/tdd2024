@@ -4,24 +4,24 @@ export class RotatingShape {
         return new RotatingShape(str);
     }
     
-    side;
+    sideLength;
     layout;
     
     constructor(str) {
         this.layout = str.split("\n").map(s => { return s.replace(/\s+/g, ""); })
-        this.side = this.layout.length;
+        this.sideLength = this.layout.length;
     }
 
     rotateLeft() {
         let str = [];
 
-        for (let h = 0; h < this.side; h++) {
+        for (let h = 0; h < this.sideLength; h++) {
 
-            for (let w = 0; w < this.side; w++) {
-                str.push(this.layout[w][this.side - 1 - h]);
+            for (let w = 0; w < this.sideLength; w++) {
+                str.push(this.layout[w][this.sideLength - 1 - h]);
             }
             
-            if (h < this.side - 1) str.push("\n");
+            if (h < this.sideLength - 1) str.push("\n");
         }
         
         return RotatingShape.fromString(str.join(""));
@@ -30,13 +30,13 @@ export class RotatingShape {
     rotateRight() {
         let str = [];
  
-        for (let h = 0; h < this.side; h++) {
+        for (let h = 0; h < this.sideLength; h++) {
         
-            for (let w = 0; w < this.side; w++) {
-                str.push(this.layout[this.side - 1 - w][h]);
+            for (let w = 0; w < this.sideLength; w++) {
+                str.push(this.layout[this.sideLength - 1 - w][h]);
             }
         
-            if (h < this.side - 1) str.push("\n");
+            if (h < this.sideLength - 1) str.push("\n");
         }
 
         return RotatingShape.fromString(str.join(""));
