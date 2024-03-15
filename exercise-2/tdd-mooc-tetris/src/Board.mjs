@@ -4,6 +4,8 @@ export class Board {
   board;
   isFalling;
   fallingBlock;
+  fallingBlockX;
+  fallingBlockY;
 
   constructor(width, height) {
     this.width = width;
@@ -17,6 +19,8 @@ export class Board {
 
   placeBlock(y, x) {
     this.board[y][x] = this.fallingBlock;
+    this.fallingBlockX = x;
+    this.fallingBlockY = y;
     return true;
   }
 
@@ -24,7 +28,7 @@ export class Board {
     if (this.isFalling) {
       throw new Error("already falling")
     }
-    this.fallingBlock = block
+    this.fallingBlock = block;
     this.placeBlock(0, 1);
     this.isFalling = true;
   }
