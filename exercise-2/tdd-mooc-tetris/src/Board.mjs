@@ -23,13 +23,13 @@ export class Board {
     for (let j = 0; j < this.fallingBlock.shape.sideLength; j++) {
       for (let i = 0; i < this.fallingBlock.shape.sideLength; i++) {
         if (this.fallingBlock.shape.layout[j][i] !== ".") {
-          if (y+j < 0 | y+j >= this.height | x+i < 0 | x+i >= this.width | this.board[y+j][x+i] !== ".") success = false;
+          if (y+j < 0 || y+j >= this.height || x+i < 0 || x+i >= this.width || this.board[y+j][x+i] !== ".") success = false;
         }
       }
     }
 
     if (!success) return false;
-    
+    /*
     for (let j = 0; j < this.fallingBlock.shape.sideLength; j++) {
       for (let i = 0; i < this.fallingBlock.shape.sideLength; i++) {
         if (this.fallingBlock.shape.layout[j][i] !== ".") {
@@ -39,7 +39,7 @@ export class Board {
         }
       }
     }
-    
+    */
     this.fallingBlockX = x;
     this.fallingBlockY = y;  
     return true;
@@ -54,9 +54,7 @@ export class Board {
     this.isFalling = true;
   }
 
-  tick() {
-    let changed = false;
-    
+  tick() {    
     this.isFalling = this.placeBlock(this.fallingBlockY + 1, this.fallingBlockX);
   }
 
@@ -73,9 +71,12 @@ export class Board {
     if (this.isFalling) {
       for (let j = 0; j < this.fallingBlock.shape.sideLength; j++) {
         for (let i = 0; i < this.fallingBlock.shape.sideLength; i++) {
-          if (this.fallingBlock.shape.layout[j][i] !== "." & this.fallingblockY+j >= 0 & this.fallingBlockX+j < this.height & this.fallingBlockX+i >= 0 & this.fallingBlockX+i < this.width) {
+          if (this.fallingBlock.shape.layout[j][i] !== "." && this.fallingBlockY+j >= 0 && this.fallingBlockY+j < this.height && this.fallingBlockX+i >= 0 && this.fallingBlockX+i < this.width) {
             str[(this.width+1)*(this.fallingBlockY+j)+this.fallingBlockX+i] = this.fallingBlock.shape.layout[j][i];
-    }}}}
+          }
+        }
+      }
+    }
     return str.join("");
   }
 }
