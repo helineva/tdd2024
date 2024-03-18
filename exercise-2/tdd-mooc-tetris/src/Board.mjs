@@ -56,16 +56,9 @@ export class Board {
 
   tick() {
     let changed = false;
-    for (let i = this.height - 1; i > 0; i--) {
-      for (let j = 0; j < this.width; j++) {
-        if (this.board[i-1][j] !== "." && this.board[i][j] === ".") {
-          this.board[i][j] = this.board[i-1][j];
-          this.board[i-1][j] = ".";
-          changed = true;
-        }
-      }
-    this.isFalling = changed;
-  }}
+    
+    this.isFalling = this.placeBlock(this.fallingBlockY + 1, this.fallingBlockX);
+  }
 
   hasFalling() {
     return this.isFalling;
