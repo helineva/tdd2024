@@ -18,19 +18,14 @@ export class Board {
   }
 
   placeBlock(y, x) {
-    let success = true;
-
     for (let j = 0; j < this.fallingBlock.shape.sideLength; j++) {
       for (let i = 0; i < this.fallingBlock.shape.sideLength; i++) {
         if (this.fallingBlock.shape.layout[j][i] !== ".") {
-          if (y+j < 0 || y+j >= this.height || x+i < 0 || x+i >= this.width || this.board[y+j][x+i] !== ".") success = false;
+          if (y+j < 0 || y+j >= this.height || x+i < 0 || x+i >= this.width || this.board[y+j][x+i] !== ".") return false;
         }
       }
     }
-
-    if (!success) return false;
-    /*
-    */
+    
     this.fallingBlockX = x;
     this.fallingBlockY = y;  
     return true;
@@ -46,7 +41,7 @@ export class Board {
   }
 
   tick() {    
-    this.isFalling = this.placeBlock(this.fallingBlockY + 1, this.fallingBlockX);
+    if (this.isFalling) this.isFalling = this.placeBlock(this.fallingBlockY + 1, this.fallingBlockX);
   }
 
   hasFalling() {
