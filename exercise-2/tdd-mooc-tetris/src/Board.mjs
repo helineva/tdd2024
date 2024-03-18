@@ -35,6 +35,10 @@ export class Board {
     this.moveBlock(this.fallingBlockY, this.fallingBlockX - 1);
   }
 
+  moveRight() {
+    this.moveBlock(this.fallingBlockY, this.fallingBlockX + 1);
+  }
+
   placeBlock() {
     for (let j = 0; j < this.fallingBlock.shape.sideLength; j++) {
       for (let i = 0; i < this.fallingBlock.shape.sideLength; i++) {
