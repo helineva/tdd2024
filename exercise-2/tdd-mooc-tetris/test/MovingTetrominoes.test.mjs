@@ -9,4 +9,8 @@ describe("Moving tetrominoes", () => {
   beforeEach(() => {
     board = new Board(10, 6);
   });
+
+  test("start from the top middle", () => {
+    board.drop(Tetromino.T_SHAPE);
+  });
 });
