@@ -67,9 +67,15 @@ export class Board {
   toString() {
     let str = [];
     for (let i = 0; i < this.height; i++) {
-      let row = this.board[i].join("");
-      str.push(row + "\n");
+      str.push(...this.board[i]);
+      str.push("\n");
     }
+    if (this.isFalling) {
+      for (let j = 0; j < this.fallingBlock.shape.sideLength; j++) {
+        for (let i = 0; i < this.fallingBlock.shape.sideLength; i++) {
+          if (this.fallingBlock.shape.layout[j][i] !== "." & this.fallingblockY+j >= 0 & this.fallingBlockX+j < this.height & this.fallingBlockX+i >= 0 & this.fallingBlockX+i < this.width) {
+            str[(this.width+1)*(this.fallingBlockY+j)+this.fallingBlockX+i] = this.fallingBlock.shape.layout[j][i];
+    }}}}
     return str.join("");
   }
 }
