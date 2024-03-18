@@ -31,6 +31,10 @@ export class Board {
     return true;
   }
 
+  placeBlock() {
+    return;
+  }
+
   drop(block) {
     if (this.isFalling) {
       throw new Error("already falling")
@@ -41,7 +45,12 @@ export class Board {
   }
 
   tick() {    
-    if (this.isFalling) this.isFalling = this.moveBlock(this.fallingBlockY + 1, this.fallingBlockX);
+    if (this.isFalling) {
+      this.isFalling = this.moveBlock(this.fallingBlockY + 1, this.fallingBlockX);
+      if (!this.isFalling) {
+        this.placeBlock();
+      }
+    }
   }
 
   hasFalling() {
