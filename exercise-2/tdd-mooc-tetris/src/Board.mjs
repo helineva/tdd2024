@@ -60,6 +60,10 @@ export class Board {
     this.rotate("L");
   }
 
+  rotateRight() {
+    this.rotate("R");
+  }
+
   placeBlock() {
     for (let j = 0; j < this.fallingBlock.shape.sideLength; j++) {
       for (let i = 0; i < this.fallingBlock.shape.sideLength; i++) {
