@@ -37,5 +37,72 @@ describe("Falling tetrominoes", () => {
        ..........`
     );
   });
+
+  test("can be rotated left/counterclockwise twice", () => {
+    board.drop(Tetromino.T_SHAPE);
+    board.rotateLeft();
+    board.rotateLeft();
+
+    expect(board.toString()).to.equalShape(
+      `..........
+       ...TTT....
+       ....T.....
+       ..........
+       ..........
+       ..........`
+    );
+  });
+
+  test("can be rotated right/clockwise twice", () => {
+    board.drop(Tetromino.T_SHAPE);
+    board.rotateRight();
+    board.rotateRight();
+
+    expect(board.toString()).to.equalShape(
+      `..........
+       ...TTT....
+       ....T.....
+       ..........
+       ..........
+       ..........`
+    );
+  });
+
+  test("can not be rotated if there is no room", () => {
+    board.drop(Tetromino.T_SHAPE);
+    for (let i = 0; i < 5; i++) board.tick();
+    board.drop(Tetromino.T_SHAPE);
+    for (let i = 0; i < 3; i++) board.tick();
+    board.drop(Tetromino.T_SHAPE);
+    board.rotateRight();
+
+    expect(board.toString()).to.equalShape(
+      `....T.....
+       ...TTT....
+       ....T.....
+       ...TTT....
+       ....T.....
+       ...TTT....`
+    );
+  });
+
+  test("can be rotated next to another block", () => {
+    board.drop(Tetromino.T_SHAPE);
+    for (let i = 0; i < 5; i++) board.tick();
+    board.drop(Tetromino.T_SHAPE);
+    for (let i = 0; i < 3; i++) board.tick();
+    board.drop(Tetromino.T_SHAPE);
+    board.moveRight();
+    board.rotateLeft();
+
+    expect(board.toString()).to.equalShape(
+      `.....T....
+       ....TT....
+       ....TT....
+       ...TTT....
+       ....T.....
+       ...TTT....`
+    );
+  });
 });
 
