@@ -44,7 +44,16 @@ export class Board {
   }
 
   rotate(direction="R") {
-    let rotatedBlock = direction == "L" ? this.fallingBlock.rotateLeft() : this.fallingBlock.rotateRight();
+    let rotatedBlock = direction === "L" ? this.fallingBlock.rotateLeft() : this.fallingBlock.rotateRight();
+    for (let j = 0; j < rotatedBlock.shape.sideLength; j++) {
+      for (let i = 0; i < rotatedBlock.shape.sideLength; i++) {
+        if (rotatedBlock.shape.layout[j][i] !== ".") {
+          if (y+j < 0 || y+j >= this.height || x+i < 0 || x+i >= this.width || this.board[y+j][x+i] !== ".") return false;
+        }
+      }
+    }
+    this.fallingBlock = rotatedBlock;
+    return true;
   }
 
   placeBlock() {
