@@ -43,6 +43,10 @@ export class Board {
     this.moveBlock(this.fallingBlockY + 1, this.fallingBlockX);
   }
 
+  rotate(direction="R") {
+    let rotatedBlock = direction == "L" ? this.fallingBlock.rotateLeft() : this.fallingBlock.rotateRight();
+  }
+
   placeBlock() {
     for (let j = 0; j < this.fallingBlock.shape.sideLength; j++) {
       for (let i = 0; i < this.fallingBlock.shape.sideLength; i++) {
