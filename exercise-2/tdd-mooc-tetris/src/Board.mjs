@@ -48,12 +48,16 @@ export class Board {
     for (let j = 0; j < rotatedBlock.shape.sideLength; j++) {
       for (let i = 0; i < rotatedBlock.shape.sideLength; i++) {
         if (rotatedBlock.shape.layout[j][i] !== ".") {
-          if (y+j < 0 || y+j >= this.height || x+i < 0 || x+i >= this.width || this.board[y+j][x+i] !== ".") return false;
+          if (this.fallingBlockY+j < 0 || this.fallingBlockY+j >= this.height || this.fallingBlockX+i < 0 || this.fallingBlockX+i >= this.width || this.board[this.fallingBlockY+j][this.fallingBlockX+i] !== ".") return false;
         }
       }
     }
     this.fallingBlock = rotatedBlock;
     return true;
+  }
+
+  rotateLeft() {
+    this.rotate("L");
   }
 
   placeBlock() {
