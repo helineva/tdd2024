@@ -144,5 +144,149 @@ describe("Falling tetrominoes", () => {
        ..........`
     );
   });
+
+  test("will move away from the right wall when rotated left next to it", () => {
+    board.drop(Tetromino.T_SHAPE);
+    board.rotateLeft();
+    for (let i = 0; i < 5; i++) board.moveRight();
+    board.rotateLeft();
+
+    expect(board.toString()).to.equalShape(
+      `..........
+       .......TTT
+       ........T.
+       ..........
+       ..........
+       ..........`
+    );
+  });
+
+  test("will move away from the right wall when rotated right next to it", () => {
+    board.drop(Tetromino.T_SHAPE);
+    board.rotateLeft();
+    for (let i = 0; i < 5; i++) board.moveRight();
+    board.rotateRight();
+
+    expect(board.toString()).to.equalShape(
+      `........T.
+       .......TTT
+       ..........
+       ..........
+       ..........
+       ..........`
+    );
+  });
+
+  test("will move two steps away (I-shape) from the left wall when rotated next to it", () => {
+    board.drop(Tetromino.I_SHAPE);
+    board.rotateRight();
+    for (let i = 0; i < 4; i++) board.moveLeft();
+    board.rotateLeft();
+
+    expect(board.toString()).to.equalShape(
+      `..........
+       ..........
+       IIII......
+       ..........
+       ..........
+       ..........`
+    );
+  });
+
+  test("will move two steps away (I-shape) from the right wall when rotated next to it", () => {
+    board.drop(Tetromino.I_SHAPE);
+    board.rotateRight();
+    for (let i = 0; i < 5; i++) board.moveRight();
+    board.rotateRight();
+
+    expect(board.toString()).to.equalShape(
+      `..........
+       ..........
+       ......IIII
+       ..........
+       ..........
+       ..........`
+    );
+  });
+
+  test("will move away from a block to the right when rotated left next to it", () => {
+    board.drop(Tetromino.I_SHAPE);
+    board.rotateRight();
+    for (let i = 0; i < 3; i++) board.tick();
+    board.drop(Tetromino.T_SHAPE);
+    board.moveRight();
+    board.rotateRight();
+    board.tick();
+    board.rotateLeft();
+    
+    expect(board.toString()).to.equalShape(
+      `..........
+       ......T...
+       ....ITTT..
+       ....I.....
+       ....I.....
+       ....I.....`
+    );
+  });
+
+  test("will move away from a block to the right when rotated right next to it", () => {
+    board.drop(Tetromino.I_SHAPE);
+    board.rotateRight();
+    for (let i = 0; i < 3; i++) board.tick();
+    board.drop(Tetromino.T_SHAPE);
+    board.moveRight();
+    board.rotateRight();
+    board.tick();
+    board.rotateRight();
+    
+    expect(board.toString()).to.equalShape(
+      `..........
+       ..........
+       ....ITTT..
+       ....I.T...
+       ....I.....
+       ....I.....`
+    );
+  });
+
+  test("will move away from a block to the left when rotated left next to it", () => {
+    board.drop(Tetromino.I_SHAPE);
+    board.rotateRight();
+    for (let i = 0; i < 3; i++) board.tick();
+    board.drop(Tetromino.T_SHAPE);
+    board.moveLeft();
+    board.rotateLeft();
+    board.tick();
+    board.rotateLeft();
+    
+    expect(board.toString()).to.equalShape(
+      `..........
+       ..........
+       .TTTI.....
+       ..T.I.....
+       ....I.....
+       ....I.....`
+    );
+  });
+
+  test("will move away from a block to the left when rotated right next to it", () => {
+    board.drop(Tetromino.I_SHAPE);
+    board.rotateRight();
+    for (let i = 0; i < 3; i++) board.tick();
+    board.drop(Tetromino.T_SHAPE);
+    board.moveLeft();
+    board.rotateLeft();
+    board.tick();
+    board.rotateRight();
+    
+    expect(board.toString()).to.equalShape(
+      `..........
+       ..T.......
+       .TTTI.....
+       ....I.....
+       ....I.....
+       ....I.....`
+    );
+  });
 });
 
