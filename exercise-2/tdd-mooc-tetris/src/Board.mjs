@@ -51,11 +51,13 @@ export class Board {
   }
 
   rotateLeft() {
-    if (this.rotate(this.fallingBlock.rotateLeft())) this.fallingBlock = this.fallingBlock.rotateLeft();
+    let rotatedBlock = this.fallingBlock.rotateLeft();
+    if (this.roomForBlock(rotatedBlock, this.fallingBlockY, this.fallingBlockX)) this.fallingBlock = rotatedBlock;
   }
 
   rotateRight() {
-    if (this.rotate(this.fallingBlock.rotateRight())) this.fallingBlock = this.fallingBlock.rotateRight();
+    let rotatedBlock = this.fallingBlock.rotateRight();
+    if (this.roomForBlock(rotatedBlock, this.fallingBlockY, this.fallingBlockX)) this.fallingBlock = rotatedBlock;
   }
 
   placeBlock() {
