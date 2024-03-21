@@ -17,7 +17,7 @@ export class Board {
     }
   }
 
-  moveBlock(block, y, x) {
+  roomForBlock(block, y, x) {
     for (let j = 0; j < block.shape.sideLength; j++) {
       for (let i = 0; i < block.shape.sideLength; i++) {
         if (block.shape.layout[j][i] !== ".") {
@@ -29,25 +29,25 @@ export class Board {
   }
 
   moveLeft() {
-    if (this.moveBlock(this.fallingBlock, this.fallingBlockY, this.fallingBlockX - 1)) {
+    if (this.roomForBlock(this.fallingBlock, this.fallingBlockY, this.fallingBlockX - 1)) {
       this.fallingBlockX--;
     }
   }
 
   moveRight() {
-    if (this.moveBlock(this.fallingBlock, this.fallingBlockY, this.fallingBlockX + 1)) {
+    if (this.roomForBlock(this.fallingBlock, this.fallingBlockY, this.fallingBlockX + 1)) {
       this.fallingBlockX++;
     }
   }
 
   moveDown() {
-    if (this.moveBlock(this.fallingBlock, this.fallingBlockY + 1, this.fallingBlockX)) {
+    if (this.roomForBlock(this.fallingBlock, this.fallingBlockY + 1, this.fallingBlockX)) {
       this.fallingBlockY++;
     }
   }
 
   rotate(block) {
-    return this.moveBlock(block, this.fallingBlockY, this.fallingBlockX);
+    return this.roomForBlock(block, this.fallingBlockY, this.fallingBlockX);
   }
 
   rotateLeft() {
@@ -73,7 +73,7 @@ export class Board {
       throw new Error("already falling")
     }
     this.fallingBlock = block;
-    this.moveBlock(block, 0, Math.floor((this.width - block.shape.sideLength) / 2));
+    this.roomForBlock(block, 0, Math.floor((this.width - block.shape.sideLength) / 2));
     this.fallingBlockY = 0;
     this.fallingBlockX = Math.floor((this.width - block.shape.sideLength) / 2);
     this.isFalling = true;
@@ -81,7 +81,7 @@ export class Board {
 
   tick() {    
     if (this.isFalling) {
-      if (this.moveBlock(this.fallingBlock, this.fallingBlockY + 1, this.fallingBlockX)) this.fallingBlockY++;
+      if (this.roomForBlock(this.fallingBlock, this.fallingBlockY + 1, this.fallingBlockX)) this.fallingBlockY++;
       else {
         this.placeBlock();
         this.isFalling = false;
