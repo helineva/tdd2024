@@ -47,23 +47,15 @@ export class Board {
   }
 
   rotate(block) {
-    for (let j = 0; j < block.shape.sideLength; j++) {
-      for (let i = 0; i < block.shape.sideLength; i++) {
-        if (block.shape.layout[j][i] !== ".") {
-          if (this.fallingBlockY+j < 0 || this.fallingBlockY+j >= this.height || this.fallingBlockX+i < 0 || this.fallingBlockX+i >= this.width || this.board[this.fallingBlockY+j][this.fallingBlockX+i] !== ".") return false;
-        }
-      }
-    }
-    this.fallingBlock = block;
-    return true;
+    return this.moveBlock(block, this.fallingBlockY, this.fallingBlockX);
   }
 
   rotateLeft() {
-    this.rotate(this.fallingBlock.rotateLeft());
+    if (this.rotate(this.fallingBlock.rotateLeft())) this.fallingBlock = this.fallingBlock.rotateLeft();
   }
 
   rotateRight() {
-    this.rotate(this.fallingBlock.rotateRight());
+    if (this.rotate(this.fallingBlock.rotateRight())) this.fallingBlock = this.fallingBlock.rotateRight();
   }
 
   placeBlock() {
