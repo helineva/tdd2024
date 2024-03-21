@@ -104,5 +104,22 @@ describe("Falling tetrominoes", () => {
        ...TTT....`
     );
   });
+
+  test.skip("will move away from the left wall when rotated left next to it", () => {
+    board.drop(Tetromino.T_SHAPE);
+    board.rotateRight();
+    for (let i = 0; i < 3; i++) board.moveLeft();
+    board.rotateLeft();
+
+    expect(board.toString()).to.equalShape(
+      `.T........
+       TTT.......
+       ..........
+       ..........
+       ..........
+       ..........`
+    );
+  });
+
 });
 

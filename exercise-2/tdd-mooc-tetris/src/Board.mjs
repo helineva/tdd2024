@@ -17,7 +17,7 @@ export class Board {
     }
   }
 
-  moveBlock(y, x) {
+  moveBlock(block, y, x) {
     for (let j = 0; j < this.fallingBlock.shape.sideLength; j++) {
       for (let i = 0; i < this.fallingBlock.shape.sideLength; i++) {
         if (this.fallingBlock.shape.layout[j][i] !== ".") {
@@ -32,15 +32,15 @@ export class Board {
   }
 
   moveLeft() {
-    this.moveBlock(this.fallingBlockY, this.fallingBlockX - 1);
+    this.moveBlock(this.fallingBlock, this.fallingBlockY, this.fallingBlockX - 1);
   }
 
   moveRight() {
-    this.moveBlock(this.fallingBlockY, this.fallingBlockX + 1);
+    this.moveBlock(this.fallingBlock, this.fallingBlockY, this.fallingBlockX + 1);
   }
 
   moveDown() {
-    this.moveBlock(this.fallingBlockY + 1, this.fallingBlockX);
+    this.moveBlock(this.fallingBlock, this.fallingBlockY + 1, this.fallingBlockX);
   }
 
   rotate(direction="R") {
@@ -79,13 +79,13 @@ export class Board {
       throw new Error("already falling")
     }
     this.fallingBlock = block;
-    this.moveBlock(0, Math.floor((this.width - block.shape.sideLength) / 2));
+    this.moveBlock(this.fallingBlock, 0, Math.floor((this.width - block.shape.sideLength) / 2));
     this.isFalling = true;
   }
 
   tick() {    
     if (this.isFalling) {
-      this.isFalling = this.moveBlock(this.fallingBlockY + 1, this.fallingBlockX);
+      this.isFalling = this.moveBlock(this.fallingBlock, this.fallingBlockY + 1, this.fallingBlockX);
       if (!this.isFalling) {
         this.placeBlock();
       }
