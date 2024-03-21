@@ -46,16 +46,18 @@ export class Board {
     }
   }
 
-  rotateLeft() {
-    let rotatedBlock = this.fallingBlock.rotateLeft();
+  rotate(block) {
     let offsets = [0, 1, -1, 2, -2];
     for (let offset of offsets) {
-      if (this.roomForBlock(rotatedBlock, this.fallingBlockY, this.fallingBlockX + offset)) {
-        this.fallingBlock = rotatedBlock;
+      if (this.roomForBlock(block, this.fallingBlockY, this.fallingBlockX + offset)) {
+        this.fallingBlock = block;
         this.fallingBlockX = this.fallingBlockX + offset;
         break;
       }
     }
+  }
+  rotateLeft() {
+    this.rotate(this.fallingBlock.rotateLeft());
   }
 
   rotateRight() {
