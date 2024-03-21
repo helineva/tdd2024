@@ -46,10 +46,6 @@ export class Board {
     }
   }
 
-  rotate(block) {
-    return this.roomForBlock(block, this.fallingBlockY, this.fallingBlockX);
-  }
-
   rotateLeft() {
     let rotatedBlock = this.fallingBlock.rotateLeft();
     if (this.roomForBlock(rotatedBlock, this.fallingBlockY, this.fallingBlockX)) this.fallingBlock = rotatedBlock;
@@ -74,11 +70,13 @@ export class Board {
     if (this.isFalling) {
       throw new Error("already falling")
     }
-    this.fallingBlock = block;
-    this.roomForBlock(block, 0, Math.floor((this.width - block.shape.sideLength) / 2));
-    this.fallingBlockY = 0;
-    this.fallingBlockX = Math.floor((this.width - block.shape.sideLength) / 2);
+    let y = 0;
+    let x = Math.floor((this.width - block.shape.sideLength) / 2);
+    this.roomForBlock(block, y, x);
+    this.fallingBlockY = y;
+    this.fallingBlockX = x;
     this.isFalling = true;
+    this.fallingBlock = block;
   }
 
   tick() {    
