@@ -70,19 +70,27 @@ describe("Falling tetrominoes", () => {
 
   test("can not be rotated if there is no room", () => {
     board.drop(Tetromino.T_SHAPE);
+    board.moveRight();
+    board.moveRight();
     for (let i = 0; i < 5; i++) board.tick();
     board.drop(Tetromino.T_SHAPE);
+    board.moveRight();
+    board.moveRight();
     for (let i = 0; i < 3; i++) board.tick();
     board.drop(Tetromino.T_SHAPE);
+    for (let i = 0; i < 4; i++) board.moveRight();
     board.rotateRight();
+    board.tick();
+    board.tick();
+    board.rotateLeft();
 
     expect(board.toString()).to.equalShape(
-      `....T.....
-       ...TTT....
-       ....T.....
-       ...TTT....
-       ....T.....
-       ...TTT....`
+      `..........
+       ..........
+       ......T.T.
+       .....TTTTT
+       ......T.T.
+       .....TTT..`
     );
   });
 
@@ -108,7 +116,7 @@ describe("Falling tetrominoes", () => {
   test("will move away from the left wall when rotated left next to it", () => {
     board.drop(Tetromino.T_SHAPE);
     board.rotateRight();
-    for (let i = 0; i < 3; i++) board.moveLeft();
+    for (let i = 0; i < 4; i++) board.moveLeft();
     board.rotateLeft();
 
     expect(board.toString()).to.equalShape(
@@ -121,5 +129,20 @@ describe("Falling tetrominoes", () => {
     );
   });
 
+  test("will move away from the left wall when rotated right next to it", () => {
+    board.drop(Tetromino.T_SHAPE);
+    board.rotateRight();
+    for (let i = 0; i < 4; i++) board.moveLeft();
+    board.rotateRight();
+
+    expect(board.toString()).to.equalShape(
+      `..........
+       TTT.......
+       .T........
+       ..........
+       ..........
+       ..........`
+    );
+  });
 });
 
