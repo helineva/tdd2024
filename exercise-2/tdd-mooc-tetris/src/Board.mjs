@@ -48,7 +48,12 @@ export class Board {
 
   rotateLeft() {
     let rotatedBlock = this.fallingBlock.rotateLeft();
-    if (this.roomForBlock(rotatedBlock, this.fallingBlockY, this.fallingBlockX)) this.fallingBlock = rotatedBlock;
+    if (this.roomForBlock(rotatedBlock, this.fallingBlockY, this.fallingBlockX)) {
+      this.fallingBlock = rotatedBlock;
+    } else if (this.roomForBlock(rotatedBlock, this.fallingBlockY, this.fallingBlockX + 1)) {
+      this.fallingBlock = rotatedBlock;
+      this.fallingBlockX++;
+    }
   }
 
   rotateRight() {
