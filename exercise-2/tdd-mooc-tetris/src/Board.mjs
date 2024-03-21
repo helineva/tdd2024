@@ -46,25 +46,24 @@ export class Board {
     }
   }
 
-  rotate(direction="R") {
-    let rotatedBlock = direction === "L" ? this.fallingBlock.rotateLeft() : this.fallingBlock.rotateRight();
-    for (let j = 0; j < rotatedBlock.shape.sideLength; j++) {
-      for (let i = 0; i < rotatedBlock.shape.sideLength; i++) {
-        if (rotatedBlock.shape.layout[j][i] !== ".") {
+  rotate(block) {
+    for (let j = 0; j < block.shape.sideLength; j++) {
+      for (let i = 0; i < block.shape.sideLength; i++) {
+        if (block.shape.layout[j][i] !== ".") {
           if (this.fallingBlockY+j < 0 || this.fallingBlockY+j >= this.height || this.fallingBlockX+i < 0 || this.fallingBlockX+i >= this.width || this.board[this.fallingBlockY+j][this.fallingBlockX+i] !== ".") return false;
         }
       }
     }
-    this.fallingBlock = rotatedBlock;
+    this.fallingBlock = block;
     return true;
   }
 
   rotateLeft() {
-    this.rotate("L");
+    this.rotate(this.fallingBlock.rotateLeft());
   }
 
   rotateRight() {
-    this.rotate("R");
+    this.rotate(this.fallingBlock.rotateRight());
   }
 
   placeBlock() {
