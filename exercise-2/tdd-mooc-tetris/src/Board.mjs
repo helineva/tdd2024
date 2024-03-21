@@ -61,14 +61,8 @@ export class Board {
   }
 
   rotateRight() {
-    let rotatedBlock = this.fallingBlock.rotateRight();
-    if (this.roomForBlock(rotatedBlock, this.fallingBlockY, this.fallingBlockX)) {
-      this.fallingBlock = rotatedBlock;
-    } else if (this.roomForBlock(rotatedBlock, this.fallingBlockY, this.fallingBlockX + 1)) {
-      this.fallingBlock = rotatedBlock;
-      this.fallingBlockX++;
-    }
-   }
+    this.rotate(this.fallingBlock.rotateRight());
+  }
 
   placeBlock() {
     for (let j = 0; j < this.fallingBlock.shape.sideLength; j++) {
