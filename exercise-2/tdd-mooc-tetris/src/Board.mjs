@@ -25,22 +25,25 @@ export class Board {
         }
       }
     }
-    
-    this.fallingBlockX = x;
-    this.fallingBlockY = y;  
     return true;
   }
 
   moveLeft() {
-    this.moveBlock(this.fallingBlock, this.fallingBlockY, this.fallingBlockX - 1);
+    if (this.moveBlock(this.fallingBlock, this.fallingBlockY, this.fallingBlockX - 1)) {
+      this.fallingBlockX--;
+    }
   }
 
   moveRight() {
-    this.moveBlock(this.fallingBlock, this.fallingBlockY, this.fallingBlockX + 1);
+    if (this.moveBlock(this.fallingBlock, this.fallingBlockY, this.fallingBlockX + 1)) {
+      this.fallingBlockX++;
+    }
   }
 
   moveDown() {
-    this.moveBlock(this.fallingBlock, this.fallingBlockY + 1, this.fallingBlockX);
+    if (this.moveBlock(this.fallingBlock, this.fallingBlockY + 1, this.fallingBlockX)) {
+      this.fallingBlockY++;
+    }
   }
 
   rotate(direction="R") {
@@ -79,15 +82,18 @@ export class Board {
       throw new Error("already falling")
     }
     this.fallingBlock = block;
-    this.moveBlock(this.fallingBlock, 0, Math.floor((this.width - block.shape.sideLength) / 2));
+    this.moveBlock(block, 0, Math.floor((this.width - block.shape.sideLength) / 2));
+    this.fallingBlockY = 0;
+    this.fallingBlockX = Math.floor((this.width - block.shape.sideLength) / 2);
     this.isFalling = true;
   }
 
   tick() {    
     if (this.isFalling) {
-      this.isFalling = this.moveBlock(this.fallingBlock, this.fallingBlockY + 1, this.fallingBlockX);
-      if (!this.isFalling) {
+      if (this.moveBlock(this.fallingBlock, this.fallingBlockY + 1, this.fallingBlockX)) this.fallingBlockY++;
+      else {
         this.placeBlock();
+        this.isFalling = false;
       }
     }
   }
