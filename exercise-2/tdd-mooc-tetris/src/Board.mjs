@@ -20,9 +20,10 @@ export class Board {
   }
 
   roomForBlock(block, y, x) {
-    for (let j = 0; j < block.shape.sideLength; j++) {
-      for (let i = 0; i < block.shape.sideLength; i++) {
-        if (block.shape.layout[j][i] !== ".") {
+    block = ArikaTetromino.fromTetromino(block);
+    for (let j = 0; j < block.sideLength; j++) {
+      for (let i = 0; i < block.sideLength; i++) {
+        if (block.layout()[j][i] !== ".") {
           if (y+j < 0 || y+j >= this.height || x+i < 0 || x+i >= this.width || this.board[y+j][x+i] !== ".") return false;
         }
       }

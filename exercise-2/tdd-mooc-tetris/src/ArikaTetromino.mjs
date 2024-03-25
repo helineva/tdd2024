@@ -1,7 +1,7 @@
 export class ArikaTetromino {
 
     static fromString(strArray) {
-        return new ArikaTetromino(strArray.map(s => { return s.split("\n").map(t => { return t.replace(/\s+/g, ""); }); }));
+        return new ArikaTetromino(strArray.map(s => { return s.trim().split("\n").map(t => { return t.replace(/\s+/g, ""); }); }));
     }
 
     static fromTetromino(tetromino) {
@@ -43,7 +43,7 @@ export class ArikaTetromino {
     constructor(orientations, state=0) {
         this.orientations = orientations;
         this.state = state;
-        this.sideLength = this.orientations.length;
+        this.sideLength = this.orientations[0].length;
     }
 
     rotateLeft() {
