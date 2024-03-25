@@ -31,19 +31,19 @@ export class Board {
   }
 
   moveLeft() {
-    if (this.roomForBlock(ArikaTetromino.fromTetromino(this.fallingBlock), this.fallingBlockY, this.fallingBlockX - 1)) {
+    if (this.roomForBlock(this.fallingBlock, this.fallingBlockY, this.fallingBlockX - 1)) {
       this.fallingBlockX--;
     }
   }
 
   moveRight() {
-    if (this.roomForBlock(ArikaTetromino.fromTetromino(this.fallingBlock), this.fallingBlockY, this.fallingBlockX + 1)) {
+    if (this.roomForBlock(this.fallingBlock, this.fallingBlockY, this.fallingBlockX + 1)) {
       this.fallingBlockX++;
     }
   }
 
   moveDown() {
-    if (this.roomForBlock(ArikaTetromino.fromTetromino(this.fallingBlock), this.fallingBlockY + 1, this.fallingBlockX)) {
+    if (this.roomForBlock(this.fallingBlock, this.fallingBlockY + 1, this.fallingBlockX)) {
       this.fallingBlockY++;
     }
   }
@@ -51,7 +51,7 @@ export class Board {
   rotate(block) {
     let offsets = [0, 1, -1, 2, -2];
     for (let offset of offsets) {
-      if (this.roomForBlock(ArikaTetromino.fromTetromino(block), this.fallingBlockY, this.fallingBlockX + offset)) {
+      if (this.roomForBlock(block, this.fallingBlockY, this.fallingBlockX + offset)) {
         this.fallingBlock = block;
         this.fallingBlockX = this.fallingBlockX + offset;
         break;
@@ -67,11 +67,10 @@ export class Board {
   }
 
   placeBlock() {
-    let block = ArikaTetromino.fromTetromino(this.fallingBlock);
-    for (let j = 0; j < block.sideLength; j++) {
-      for (let i = 0; i < block.sideLength; i++) {
-        if (block.layout()[j][i] !== "." && this.fallingBlockY+j >= 0 && this.fallingBlockY+j < this.height && this.fallingBlockX+i >= 0 && this.fallingBlockX+i < this.width) {
-          this.board[this.fallingBlockY+j][this.fallingBlockX+i] = block.layout()[j][i];
+    for (let j = 0; j < this.fallingBlock.sideLength; j++) {
+      for (let i = 0; i < this.fallingBlock.sideLength; i++) {
+        if (this.fallingBlock.layout()[j][i] !== "." && this.fallingBlockY+j >= 0 && this.fallingBlockY+j < this.height && this.fallingBlockX+i >= 0 && this.fallingBlockX+i < this.width) {
+          this.board[this.fallingBlockY+j][this.fallingBlockX+i] = this.fallingBlock.layout()[j][i];
         }
       }
     }
@@ -81,9 +80,10 @@ export class Board {
     if (this.isFalling) {
       throw new Error("already falling")
     }
+    block = ArikaTetromino.fromTetromino(block);
     let y = 0;
-    let x = Math.floor((this.width - block.shape.sideLength) / 2);    
-    this.roomForBlock(ArikaTetromino.fromTetromino(block), y, x);
+    let x = Math.floor((this.width - block.sideLength) / 2);    
+    this.roomForBlock(block, y, x);
     this.fallingBlockY = y;
     this.fallingBlockX = x;
     this.isFalling = true;
@@ -92,7 +92,7 @@ export class Board {
 
   tick() {    
     if (this.isFalling) {
-      if (this.roomForBlock(ArikaTetromino.fromTetromino(this.fallingBlock), this.fallingBlockY + 1, this.fallingBlockX)) this.fallingBlockY++;
+      if (this.roomForBlock(this.fallingBlock, this.fallingBlockY + 1, this.fallingBlockX)) this.fallingBlockY++;
       else {
         this.placeBlock();
         this.isFalling = false;
@@ -111,11 +111,10 @@ export class Board {
       str.push("\n");
     }
     if (this.isFalling) {
-      let block = ArikaTetromino.fromTetromino(this.fallingBlock);
-      for (let j = 0; j < block.sideLength; j++) {
-        for (let i = 0; i < block.sideLength; i++) {
-          if (block.layout()[j][i] !== "." && this.fallingBlockY+j >= 0 && this.fallingBlockY+j < this.height && this.fallingBlockX+i >= 0 && this.fallingBlockX+i < this.width) {
-            str[(this.width+1)*(this.fallingBlockY+j)+this.fallingBlockX+i] = block.layout()[j][i];
+      for (let j = 0; j < this.fallingBlock.sideLength; j++) {
+        for (let i = 0; i < this.fallingBlock.sideLength; i++) {
+          if (this.fallingBlock.layout()[j][i] !== "." && this.fallingBlockY+j >= 0 && this.fallingBlockY+j < this.height && this.fallingBlockX+i >= 0 && this.fallingBlockX+i < this.width) {
+            str[(this.width+1)*(this.fallingBlockY+j)+this.fallingBlockX+i] = this.fallingBlock.layout()[j][i];
           }
         }
       }
