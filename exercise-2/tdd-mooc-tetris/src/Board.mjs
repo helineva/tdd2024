@@ -20,7 +20,6 @@ export class Board {
   }
 
   roomForBlock(block, y, x) {
-    block = ArikaTetromino.fromTetromino(block);
     for (let j = 0; j < block.sideLength; j++) {
       for (let i = 0; i < block.sideLength; i++) {
         if (block.layout()[j][i] !== ".") {
@@ -32,19 +31,19 @@ export class Board {
   }
 
   moveLeft() {
-    if (this.roomForBlock(this.fallingBlock, this.fallingBlockY, this.fallingBlockX - 1)) {
+    if (this.roomForBlock(ArikaTetromino.fromTetromino(this.fallingBlock), this.fallingBlockY, this.fallingBlockX - 1)) {
       this.fallingBlockX--;
     }
   }
 
   moveRight() {
-    if (this.roomForBlock(this.fallingBlock, this.fallingBlockY, this.fallingBlockX + 1)) {
+    if (this.roomForBlock(ArikaTetromino.fromTetromino(this.fallingBlock), this.fallingBlockY, this.fallingBlockX + 1)) {
       this.fallingBlockX++;
     }
   }
 
   moveDown() {
-    if (this.roomForBlock(this.fallingBlock, this.fallingBlockY + 1, this.fallingBlockX)) {
+    if (this.roomForBlock(ArikaTetromino.fromTetromino(this.fallingBlock), this.fallingBlockY + 1, this.fallingBlockX)) {
       this.fallingBlockY++;
     }
   }
@@ -52,7 +51,7 @@ export class Board {
   rotate(block) {
     let offsets = [0, 1, -1, 2, -2];
     for (let offset of offsets) {
-      if (this.roomForBlock(block, this.fallingBlockY, this.fallingBlockX + offset)) {
+      if (this.roomForBlock(ArikaTetromino.fromTetromino(block), this.fallingBlockY, this.fallingBlockX + offset)) {
         this.fallingBlock = block;
         this.fallingBlockX = this.fallingBlockX + offset;
         break;
@@ -83,7 +82,7 @@ export class Board {
     }
     let y = 0;
     let x = Math.floor((this.width - block.shape.sideLength) / 2);    
-    this.roomForBlock(block, y, x);
+    this.roomForBlock(ArikaTetromino.fromTetromino(block), y, x);
     this.fallingBlockY = y;
     this.fallingBlockX = x;
     this.isFalling = true;
@@ -92,7 +91,7 @@ export class Board {
 
   tick() {    
     if (this.isFalling) {
-      if (this.roomForBlock(this.fallingBlock, this.fallingBlockY + 1, this.fallingBlockX)) this.fallingBlockY++;
+      if (this.roomForBlock(ArikaTetromino.fromTetromino(this.fallingBlock), this.fallingBlockY + 1, this.fallingBlockX)) this.fallingBlockY++;
       else {
         this.placeBlock();
         this.isFalling = false;
