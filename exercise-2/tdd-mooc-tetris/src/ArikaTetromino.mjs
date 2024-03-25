@@ -1,15 +1,28 @@
 export class ArikaTetromino {
 
     static fromString(strArray) {
-        return new ArikaTetromino(strArray.map(s => { return s.split("\n").replace(/\s+/g, ""); }));
+        return new ArikaTetromino(strArray.map(s => { return s.split("\n").map(t => { return t.replace(/\s+/g, ""); }); }));
     }
 
     static get T_SHAPE() {
         return ArikaTetromino.fromString([
             "....\nTTT.\n.T..\n....",
             ".T..\nTT..\n.T..\n....",
-            ".T..\n.TT.\n.T..\n....",
-            "....\nTTT.\n.T..\n...."
+            "....\n.T..\nTTT.\n....",
+            ".T..\n.TT.\n.T..\n...."
+        ]);
+    }
+
+    static get I_SHAPE() {
+        return ArikaTetromino.fromString([
+            "....\nIIII\n....\n....",
+            "..I.\n..I.\n..I.\n..I."
+        ]);
+    }
+
+    static get O_SHAPE() {
+        return ArikaTetromino.fromString([
+            "....\n.OO.\n.OO.\n...."
         ]);
     }
 
@@ -24,14 +37,18 @@ export class ArikaTetromino {
     }
 
     rotateLeft() {
-        return new ArikaTetromino(this.orientations, (state + 1) % this.orientations.length);
+        return new ArikaTetromino(this.orientations, (this.state + this.orientations.length - 1) % this.orientations.length);
     }
 
     rotateRight() {
-        return new ArikaTetromino(this.orientations, (state + this.orientations - 1) % this.orientations.length);
+        return new ArikaTetromino(this.orientations, (this.state + 1) % this.orientations.length);
     }
     
+    layout() {
+        return this.orientations[this.state];
+    }
+
     toString() {
-        return this.orientations.join("\n");
+        return this.layout().join("\n") + "\n";
     }
 }

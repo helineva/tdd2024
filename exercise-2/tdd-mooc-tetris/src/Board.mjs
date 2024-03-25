@@ -1,3 +1,5 @@
+import { ArikaTetromino } from "../src/ArikaTetromino.mjs";
+
 export class Board {
   width;
   height;
@@ -79,7 +81,7 @@ export class Board {
       throw new Error("already falling")
     }
     let y = 0;
-    let x = Math.floor((this.width - block.shape.sideLength) / 2);
+    let x = Math.floor((this.width - block.shape.sideLength) / 2);    
     this.roomForBlock(block, y, x);
     this.fallingBlockY = y;
     this.fallingBlockX = x;
