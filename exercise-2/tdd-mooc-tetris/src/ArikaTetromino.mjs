@@ -4,6 +4,16 @@ export class ArikaTetromino {
         return new ArikaTetromino(strArray.map(s => { return s.split("\n").map(t => { return t.replace(/\s+/g, ""); }); }));
     }
 
+    static fromTetromino(tetromino) {
+        let strArray = [];
+        let n = tetromino.valid_orientations.filter(x => x === true).length;
+        for (let i = 0; i < n; i++) {
+            strArray.push(tetromino.toString());
+            tetromino = tetromino.rotateRight();
+        }
+        return ArikaTetromino.fromString(strArray);
+    }
+
     static get T_SHAPE() {
         return ArikaTetromino.fromString([
             "....\nTTT.\n.T..\n....",
