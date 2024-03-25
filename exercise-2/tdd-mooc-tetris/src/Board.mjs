@@ -80,8 +80,7 @@ export class Board {
     if (this.isFalling) {
       throw new Error("already falling")
     }
-    block = ArikaTetromino.fromTetromino(block);
-    let y = 0;
+    let y = -1;
     let x = Math.floor((this.width - block.sideLength) / 2);    
     this.roomForBlock(block, y, x);
     this.fallingBlockY = y;
