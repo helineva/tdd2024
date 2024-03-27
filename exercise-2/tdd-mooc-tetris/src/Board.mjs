@@ -19,6 +19,12 @@ export class Board {
     }
   }
 
+  setBoard(s) {
+    this.board = s.trim().split("\n").map(t => t.split(""));
+    this.height = this.board.length;
+    this.width = this.board[0].length;
+  }
+
   roomForBlock(block, y, x) {
     for (let j = 0; j < block.sideLength; j++) {
       for (let i = 0; i < block.sideLength; i++) {
