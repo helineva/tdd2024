@@ -33,4 +33,8 @@ export class Scorer {
     getLevel() {
         return this.level;
     }
+
+    addLines() {
+        this.lines++;
+    }
 }
