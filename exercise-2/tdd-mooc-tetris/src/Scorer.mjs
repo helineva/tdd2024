@@ -34,7 +34,8 @@ export class Scorer {
         return this.level;
     }
 
-    addLines() {
-        this.lines++;
+    addLines(lines=1) {
+        this.lines += lines;
+        this.score += 40;
     }
 }
