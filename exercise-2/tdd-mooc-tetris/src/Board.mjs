@@ -1,5 +1,3 @@
-import { ArikaTetromino } from "../src/ArikaTetromino.mjs";
-
 export class Board {
   width;
   height;
@@ -8,6 +6,7 @@ export class Board {
   fallingBlock;
   fallingBlockX;
   fallingBlockY;
+  scorers;
 
   constructor(width, height) {
     this.width = width;
@@ -17,6 +16,11 @@ export class Board {
     for (let i = 0; i < this.height; i++) {
       this.board.push(Array(this.width).fill("."));
     }
+    this.scorers = [];
+  }
+
+  registerScorer(scorer) {
+    this.scorers.push(scorer);
   }
 
   setBoard(s) {
@@ -123,7 +127,10 @@ export class Board {
       else {
         this.placeBlock();
         this.isFalling = false;
-        this.clearLines();
+        let clearedLines = this.clearLines();
+        for (let scorer of this.scorers) {
+          scorer.addLines(clearedLines);
+        }
       }
     }
   }

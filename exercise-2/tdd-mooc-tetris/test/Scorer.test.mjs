@@ -4,7 +4,7 @@ import { Board } from "../src/Board.mjs";
 import { ArikaTetromino } from "../src/ArikaTetromino.mjs";
 import { Scorer } from "../src/Scorer.mjs";
 
-describe("Cleared lines", () => {
+describe("Lines", () => {
     let scorer;
     beforeEach(() => {
       scorer = new Scorer();
@@ -119,5 +119,66 @@ describe("Level", () => {
     test("increases to 9 (max level) when first 100 lines are cleared", () => {
         scorer.addLines(100);
         expect(scorer.getLevel()).to.equal(9);
+    });
+});
+
+describe("Clearing lines on the board", () => {
+    let board;
+    let scorer;
+    beforeEach(() => {
+        board = new Board(9, 6);
+        scorer = new Scorer();
+        board.registerScorer(scorer);
+    });
+
+    test("increases cleared lines", () => {
+        board.setBoard(
+`.........
+.........
+.........
+.........
+.........
+TTTTTTTT.`
+);
+        board.drop(ArikaTetromino.I_SHAPE);
+        board.tick();
+        board.rotateRight();
+        for (let i = 0; i < 4; i++) board.moveRight();
+        for (let i = 0; i < 3; i++) board.tick();
+        expect(scorer.getLines()).to.equal(1);
+    });
+
+    test("increases score", () => {
+        board.setBoard(
+`.........
+.........
+.........
+.........
+.........
+TTTTTTTT.`
+);
+        board.drop(ArikaTetromino.I_SHAPE);
+        board.tick();
+        board.rotateRight();
+        for (let i = 0; i < 4; i++) board.moveRight();
+        for (let i = 0; i < 3; i++) board.tick();
+        expect(scorer.getScore()).to.equal(40);
+    });
+
+    test("increases score (double-clear)", () => {
+        board.setBoard(
+`.........
+.........
+.........
+.........
+TTTTTTTT.
+TTTTTTTT.`
+);
+        board.drop(ArikaTetromino.I_SHAPE);
+        board.tick();
+        board.rotateRight();
+        for (let i = 0; i < 4; i++) board.moveRight();
+        for (let i = 0; i < 3; i++) board.tick();
+        expect(scorer.getScore()).to.equal(100);
     });
 });
