@@ -1,4 +1,5 @@
 export class Scorer {
+    static SCORE = { 1: 40, 2: 100, 3: 300, 4: 400, "other": 400 };
 
     lines;
     score;
@@ -7,7 +8,7 @@ export class Scorer {
     constructor() {
         this.lines = 0;
         this.score = 0;
-        this.level = 1;
+        this.level = 0;
     }
 
     setLines(lines) {
@@ -36,6 +37,13 @@ export class Scorer {
 
     addLines(lines=1) {
         this.lines += lines;
-        this.score += 40;
+        if (Scorer.SCORE.hasOwnProperty(lines)) {
+            this.score += Scorer.SCORE[lines];
+        } else {
+            this.score += Scorer.SCORE["other"];
+        }
+        if (this.lines >= 10) {
+            this.level = 1;
+        }
     }
 }

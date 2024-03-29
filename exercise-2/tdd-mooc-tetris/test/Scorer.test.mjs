@@ -10,15 +10,15 @@ describe("Cleared lines", () => {
       scorer = new Scorer();
     });
 
-  test("can be increased by one", () => {
-    scorer.addLines();
-    expect(scorer.getLines()).to.equal(1);
-  });
+    test("can be increased by one", () => {
+        scorer.addLines();
+        expect(scorer.getLines()).to.equal(1);
+    });
 
-  test("can be increased by more than one", () => {
-    scorer.addLines(2);
-    expect(scorer.getLines()).to.equal(2);
-  });
+    test("can be increased by more than one", () => {
+        scorer.addLines(2);
+        expect(scorer.getLines()).to.equal(2);
+    });
 });
 
 describe("Score", () => {
@@ -28,8 +28,8 @@ describe("Score", () => {
     });
 
     test("increases by 40 points when the first line is cleared", () => {
-      scorer.addLines(1);
-      expect(scorer.getScore()).to.equal(40);
+        scorer.addLines(1);
+        expect(scorer.getScore()).to.equal(40);
     });
 
     test("increases by 40 points when the second line is cleared", () => {
@@ -37,5 +37,22 @@ describe("Score", () => {
         let scoreBefore = scorer.getScore();
         scorer.addLines(1);
         expect(scorer.getScore()-scoreBefore).to.equal(40);
-      });
+    });
+    
+    test("increases by 100 points when first two lines are cleared", () => {
+        scorer.addLines(2);
+        expect(scorer.getScore()).to.equal(100);
+    });
+});
+
+describe("Level", () => {
+    let scorer;
+    beforeEach(() => {
+      scorer = new Scorer();
+    });
+
+    test("increases to 1 when first 10 lines are cleared", () => {
+        scorer.addLines(10);
+        expect(scorer.getLevel()).to.equal(1);
+    });
 });
