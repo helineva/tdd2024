@@ -51,6 +51,49 @@ describe("Score", () => {
         scorer.addLines(2);
         expect(scorer.getScore()).to.equal(100);
     });
+
+    test("increases by 80 points when 11th line is cleared (level 1)", () => {
+        scorer.addLines(10);
+        let scoreBefore = scorer.getScore();
+        scorer.addLines(1);
+        expect(scorer.getScore()-scoreBefore).to.equal(80);
+    });
+
+    test("increases according to the Original Nintendo Scoring System up to level 9 (one-line clears)", () => {
+        for (let i = 0; i < 100; i++) {
+            let scoreBefore = scorer.getScore();
+            let levelBefore = scorer.getLevel();
+            scorer.addLines(1);
+            expect(scorer.getScore()-scoreBefore).to.equal(40 * (levelBefore + 1));
+        }
+    });
+
+    test("increases according to the Original Nintendo Scoring System up to level 9 (two-line clears)", () => {
+        for (let i = 0; i < 50; i++) {
+            let scoreBefore = scorer.getScore();
+            let levelBefore = scorer.getLevel();
+            scorer.addLines(2);
+            expect(scorer.getScore()-scoreBefore).to.equal(100 * (levelBefore + 1));
+        }
+    });
+
+    test("increases according to the Original Nintendo Scoring System up to level 9 (three-line clears)", () => {
+        for (let i = 0; i < 33; i++) {
+            let scoreBefore = scorer.getScore();
+            let levelBefore = scorer.getLevel();
+            scorer.addLines(3);
+            expect(scorer.getScore()-scoreBefore).to.equal(300 * (levelBefore + 1));
+        }
+    });
+
+    test("increases according to the Original Nintendo Scoring System up to level 9 (four-line clears)", () => {
+        for (let i = 0; i < 25; i++) {
+            let scoreBefore = scorer.getScore();
+            let levelBefore = scorer.getLevel();
+            scorer.addLines(4);
+            expect(scorer.getScore()-scoreBefore).to.equal(1200 * (levelBefore + 1));
+        }
+    });
 });
 
 describe("Level", () => {
