@@ -97,6 +97,11 @@ export class Board {
         target_line--;
       }
     }
+    let lines_cleared = target_line+1;
+    for (; target_line >= 0; target_line--) {
+      this.board[target_line] = Array(this.width).fill(".");
+    }
+    return lines_cleared;
   }
 
   drop(block) {
