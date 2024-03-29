@@ -31,4 +31,11 @@ describe("Score", () => {
       scorer.addLines(1);
       expect(scorer.getScore()).to.equal(40);
     });
+
+    test("increases by 40 points when the second line is cleared", () => {
+        scorer.addLines(1);
+        let scoreBefore = scorer.getScore();
+        scorer.addLines(1);
+        expect(scorer.getScore()-scoreBefore).to.equal(40);
+      });
 });
