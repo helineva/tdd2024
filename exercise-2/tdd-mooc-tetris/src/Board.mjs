@@ -90,7 +90,14 @@ export class Board {
         if (this.board[j][i] === ".") {
           full = false;
           break;
-  }}}}
+        }
+      }
+      if (!full) {
+        this.board[target_line] = this.board[j];
+        target_line--;
+      }
+    }
+  }
 
   drop(block) {
     if (this.isFalling) {
