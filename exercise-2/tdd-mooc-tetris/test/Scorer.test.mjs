@@ -10,6 +10,10 @@ describe("Cleared lines", () => {
       scorer = new Scorer();
     });
 
+    test("is 0 at the start", () => {
+        expect(scorer.getLines()).to.equal(0);
+    });
+
     test("can be increased by one", () => {
         scorer.addLines();
         expect(scorer.getLines()).to.equal(1);
@@ -25,6 +29,10 @@ describe("Score", () => {
     let scorer;
     beforeEach(() => {
       scorer = new Scorer();
+    });
+
+    test("is 0 at the start", () => {
+        expect(scorer.getScore()).to.equal(0);
     });
 
     test("increases by 40 points when the first line is cleared", () => {
@@ -51,8 +59,22 @@ describe("Level", () => {
       scorer = new Scorer();
     });
 
+    test("is 0 at the start", () => {
+        expect(scorer.getLevel()).to.equal(0);
+    });
+
     test("increases to 1 when first 10 lines are cleared", () => {
         scorer.addLines(10);
         expect(scorer.getLevel()).to.equal(1);
+    });
+
+    test("increases to 2 when first 20 lines are cleared", () => {
+        scorer.addLines(20);
+        expect(scorer.getLevel()).to.equal(2);
+    });
+
+    test("increases to 9 (max level) when first 100 lines are cleared", () => {
+        scorer.addLines(100);
+        expect(scorer.getLevel()).to.equal(9);
     });
 });

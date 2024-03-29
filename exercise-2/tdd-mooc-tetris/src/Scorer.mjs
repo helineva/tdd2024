@@ -1,5 +1,7 @@
 export class Scorer {
     static SCORE = { 1: 40, 2: 100, 3: 300, 4: 400, "other": 400 };
+    static LINESPERLEVEL = 10;
+    static MAXLEVEL = 9;
 
     lines;
     score;
@@ -42,8 +44,6 @@ export class Scorer {
         } else {
             this.score += Scorer.SCORE["other"];
         }
-        if (this.lines >= 10) {
-            this.level = 1;
-        }
+        this.level = Math.min(Scorer.MAXLEVEL, Math.floor(this.lines / Scorer.LINESPERLEVEL));
     }
 }
