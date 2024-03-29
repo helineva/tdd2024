@@ -5,7 +5,7 @@ import { ArikaTetromino } from "../src/ArikaTetromino.mjs";
 
 describe("Lines", () => {
 
-  test.skip("can be cleared one at a time", () => {
+  test("can be cleared one at a time", () => {
     let board = new Board(8, 6);
     board.drop(ArikaTetromino.I_SHAPE);
     board.moveLeft();

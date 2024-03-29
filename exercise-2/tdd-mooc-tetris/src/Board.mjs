@@ -123,6 +123,7 @@ export class Board {
       else {
         this.placeBlock();
         this.isFalling = false;
+        this.clearLines();
       }
     }
   }
