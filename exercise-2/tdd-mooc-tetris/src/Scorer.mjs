@@ -10,4 +10,15 @@ export class Scorer {
         this.level = 1;
     }
 
+    getLines() {
+        return this.lines;
+    }
+
+    getScore() {
+        return this.score;
+    }
+
+    getLevel() {
+        return this.level;
+    }
 }
