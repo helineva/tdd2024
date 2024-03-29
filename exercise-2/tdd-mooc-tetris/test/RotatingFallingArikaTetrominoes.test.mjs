@@ -56,7 +56,7 @@ describe("Falling tetrominoes", () => {
     );
   });
 
-  test.skip("can be rotated right/clockwise twice", () => {
+  test("can be rotated right/clockwise twice", () => {
     board.drop(ArikaTetromino.T_SHAPE);
     board.tick();
     board.rotateRight();
@@ -303,7 +303,7 @@ describe("Falling tetrominoes", () => {
         );
     });
 
-  test.skip("will move away from a block to the left when rotated right next to it", () => {
+  test("will move away from a block to the left when rotated right next to it", () => {
     board.setBoard(
 `..........
 ..........

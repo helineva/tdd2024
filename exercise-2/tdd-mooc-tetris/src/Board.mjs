@@ -82,6 +82,16 @@ export class Board {
     }
   }
 
+  clearLines() {
+    let target_line = this.height-1;
+    for (let j = this.height-1; j >= 0; j--) {
+      let full = true;
+      for (let i = 0; i < this.width; i++) {
+        if (this.board[j][i] === ".") {
+          full = false;
+          break;
+  }}}}
+
   drop(block) {
     if (this.isFalling) {
       throw new Error("already falling")
