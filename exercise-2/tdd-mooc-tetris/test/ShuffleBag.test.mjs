@@ -37,4 +37,39 @@ describe("ShuffleBag", () => {
         }
     });
 
+    test("returns the blocks it was filled with, many times", () => {
+        let blocks = [];
+        for (let i = 0; i < 10; i++) {
+            let block = ArikaTetromino.T_SHAPE;
+            blocks.push(block);
+            bag.fill(block);
+        }
+        
+        for (let round = 0; round < 5; round++) {
+            let blocksCopy = [...blocks];
+            for (let i = 0; i < 10; i++) {
+                let block = bag.get();
+                let index = blocksCopy.findIndex((x) => x === block);
+                expect(index).to.not.equal(-1);
+                blocksCopy.splice(index, 1);
+            }
+        }
+    });
+
+    test("returns the blocks it was filled with typically in different order", () => {
+        let blocks = [];
+        for (let i = 0; i < 10; i++) {
+            let block = ArikaTetromino.T_SHAPE;
+            blocks.push(block);
+            bag.fill(block);
+        }
+        let indexDiffers = false;
+        for (let i = 0; i < 10; i++) {
+            let block = bag.get();
+            let index = blocks.findIndex((x) => x === block);
+            if (index !== i) indexDiffers = true;
+        }
+        expect(indexDiffers).to.equal(true);
+    });
+
 });
