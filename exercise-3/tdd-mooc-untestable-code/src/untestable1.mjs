@@ -1,7 +1,7 @@
 const millisPerDay = 24 * 60 * 60 * 1000;
 
 export function daysUntilChristmas() {
-  const now = new Date();
+  const now = new Date();  // this depends on the current time which is constantly changing and therefore hard to test
   const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
   const christmasDay = new Date(now.getFullYear(), 12 - 1, 25);
   if (today.getTime() > christmasDay.getTime()) {
