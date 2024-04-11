@@ -5,8 +5,11 @@ function diceRoll() {
 }
 
 export function diceHandValue() {
+  
+  // randomness; hard to test
   const die1 = diceRoll();
   const die2 = diceRoll();
+  
   if (die1 === die2) {
     // one pair
     return 100 + die1;
