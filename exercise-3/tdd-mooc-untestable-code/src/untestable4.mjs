@@ -2,7 +2,7 @@ import argon2 from "@node-rs/argon2";
 import pg from "pg";
 
 export class PostgresUserDao {
-  static instance;
+  static instance;  // singleton; hard to test; better to just create one
 
   static getInstance() {
     if (!this.instance) {
@@ -49,7 +49,7 @@ export class PostgresUserDao {
 }
 
 export class PasswordService {
-  users = PostgresUserDao.getInstance();
+  users = PostgresUserDao.getInstance();  // inherent dependency on PostgresUserDao; easier to test by switching to dependency injection
 
   async changePassword(userId, oldPassword, newPassword) {
     const user = await this.users.getById(userId);
