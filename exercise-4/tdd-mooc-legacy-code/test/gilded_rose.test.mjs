@@ -22,4 +22,22 @@ describe("Gilded Rose", () => {
     expect(items[0].quality).to.equal(3);
     expect(items[1].quality).to.equal(7);
   });
+
+  test("Backstage passes with quality < 50 and sellIn >= 11 increases in quality by one", () => {
+    const gildedRose = new Shop([new Item("Backstage passes to a TAFKAL80ETC concert", 11, 1)]);
+    const items = gildedRose.updateQuality();
+    expect(items[0].quality).to.equal(2);
+  });
+
+  test("Backstage passes with quality < 50 and 6 <= sellIn < 11 increases in quality by two", () => {
+    const gildedRose = new Shop([new Item("Backstage passes to a TAFKAL80ETC concert", 10, 1)]);
+    const items = gildedRose.updateQuality();
+    expect(items[0].quality).to.equal(3);
+  });
+
+  test("Backstage passes with quality < 50 and 1 <= sellIn < 6 increases in quality by three", () => {
+    const gildedRose = new Shop([new Item("Backstage passes to a TAFKAL80ETC concert", 5, 1)]);
+    const items = gildedRose.updateQuality();
+    expect(items[0].quality).to.equal(4);
+  });
 });
