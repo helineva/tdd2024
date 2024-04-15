@@ -1,8 +1,9 @@
 export class Item {
-  constructor(name, sellIn, quality) {
+  constructor(name, sellIn, quality, conjured=false) {
     this.name = name;
     this.sellIn = sellIn;
     this.quality = quality;
+    this.conjured = conjured;
   }
 }
 
@@ -45,7 +46,8 @@ export class Shop {
         default:
           if (item.quality <= 0) break;
           if (item.quality == 1) item.quality = 0;
-          if (item.quality >= 2) item.quality -= item.sellIn < 0 ? 2 : 1;
+          let coeff = item.conjured ? 2 : 1;
+          if (item.quality >= 2) item.quality -= item.sellIn < 0 ? coeff * 2 : coeff * 1;
           break;
       }
     }
