@@ -9,6 +9,18 @@ describe("Gilded Rose", () => {
     expect(items[0].quality).to.equal(0);
   });
 
+  test("items other than Brie, Backstage passes and Sulfuras with quality <= 0 and sellIn <= 0 retain their quality", () => {
+    const gildedRose = new Shop([new Item("Jar of vatniksoup", 0, -1)]);
+    const items = gildedRose.updateQuality();
+    expect(items[0].quality).to.equal(-1);
+  });
+
+  test("items other than Brie, Backstage passes and Sulfuras with quality >= 2 and sellIn <= 0 decrease in quality by two", () => {
+    const gildedRose = new Shop([new Item("Jar of vatniksoup", 2, 0)]);
+    const items = gildedRose.updateQuality();
+    expect(items[0].quality).to.equal(0);
+  });
+
   test("Aged Brie with quality < 50 and sellIn > 0 increases in quality by one", () => {
     const gildedRose = new Shop([new Item("Aged Brie", 1, 1), new Item("Aged Brie", 3, 5)]);
     const items = gildedRose.updateQuality();
@@ -16,11 +28,16 @@ describe("Gilded Rose", () => {
     expect(items[1].quality).to.equal(6);
   });
 
-  test("Aged Brie with quality < 50 and sellIn <= 0 increases in quality by two", () => {
-    const gildedRose = new Shop([new Item("Aged Brie", 0, 1), new Item("Aged Brie", -3, 5)]);
+  test("Aged Brie with quality < 49 and sellIn <= 0 increases in quality by two", () => {
+    const gildedRose = new Shop([new Item("Aged Brie", -1, 1)]);
     const items = gildedRose.updateQuality();
     expect(items[0].quality).to.equal(3);
-    expect(items[1].quality).to.equal(7);
+  });
+
+  test("Aged Brie with quality >= 49 and sellIn <= 0 increases in quality by one", () => {
+    const gildedRose = new Shop([new Item("Aged Brie", -1, 49)]);
+    const items = gildedRose.updateQuality();
+    expect(items[0].quality).to.equal(50);
   });
 
   test("Backstage passes with quality < 50 and sellIn >= 11 increases in quality by one", () => {
@@ -40,4 +57,18 @@ describe("Gilded Rose", () => {
     const items = gildedRose.updateQuality();
     expect(items[0].quality).to.equal(4);
   });
+
+  test("Backstage passes with sellIn <= 0 is reset to zero in quality", () => {
+    const gildedRose = new Shop([new Item("Backstage passes to a TAFKAL80ETC concert", 0, 5)]);
+    const items = gildedRose.updateQuality();
+    expect(items[0].quality).to.equal(0);
+  });
+
+  test("Sulfuras does not change in quality", () => {
+    const gildedRose = new Shop([new Item("Sulfuras, Hand of Ragnaros", 0, 5), new Item("Sulfuras, Hand of Ragnaros", -1, 5)]);
+    const items = gildedRose.updateQuality();
+    expect(items[0].quality).to.equal(5);
+    expect(items[1].quality).to.equal(5);
+  });
+  
 });
