@@ -15,6 +15,20 @@ export class Shop {
     for (var i = 0; i < this.items.length; i++) {
       let item = this.items[i];
       if (item.name == "Sulfuras, Hand of Ragnaros") continue;
+      item.sellIn--;
+      switch (item.name) {
+        case "Aged Brie":
+          if (item.quality >= 50) break;
+          if (item.quality == 49) {
+            item.quality = 50;
+            break;
+          }
+          item.quality += (item.sellIn < 0) ? 2 : 1;
+          break;
+      }
+      if (item.name == "Aged Brie") {
+        continue;
+      }
       if (item.name != "Aged Brie" && item.name != "Backstage passes to a TAFKAL80ETC concert") {
         if (item.quality > 0) {
           item.quality--;
@@ -23,12 +37,12 @@ export class Shop {
         if (item.quality < 50) {
           item.quality = item.quality + 1;
           if (item.name == "Backstage passes to a TAFKAL80ETC concert") {
-            if (item.sellIn < 11) {
+            if (item.sellIn < 10) {
               if (item.quality < 50) {
                 item.quality++;
               }
             }
-            if (item.sellIn < 6) {
+            if (item.sellIn < 5) {
               if (item.quality < 50) {
                 item.quality++;
               }
@@ -36,7 +50,6 @@ export class Shop {
           }
         }
       }
-      item.sellIn--;
       if (item.sellIn < 0) {
         if (item.name != "Aged Brie") {
           if (item.name != "Backstage passes to a TAFKAL80ETC concert") {
