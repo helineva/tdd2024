@@ -48,6 +48,7 @@ export class Shop {
           if (item.quality == 1) item.quality = 0;
           let coeff = item.conjured ? 2 : 1;
           if (item.quality >= 2) item.quality -= item.sellIn < 0 ? coeff * 2 : coeff * 1;
+          if (item.quality < 0) item.quality = 0;
           break;
       }
     }

@@ -476,4 +476,55 @@ describe("Gilded Rose", () => {
     expect(items[2].quality).to.equal(0);
   });
 
+  test("conjured item other than Brie, Backstage passes or Sulfuras; sellIn <= 0; 4 <= quality <= 50; quality decreases by four", () => {
+    const gildedRose = new Shop([
+      new Item("Jar of conjured vatniksoup", 0, 4, true),
+      new Item("Jar of conjured vatniksoup", -1, 4, true),
+      new Item("Jar of conjured vatniksoup", 0, 5, true),
+      new Item("Jar of conjured vatniksoup", -1, 5, true),
+      new Item("Jar of conjured vatniksoup", 0, 49, true),
+      new Item("Jar of conjured vatniksoup", -1, 49, true),            
+      new Item("Jar of conjured vatniksoup", 0, 50, true),
+      new Item("Jar of conjured vatniksoup", -1, 50, true)
+    ]);
+    const items = gildedRose.updateQuality();
+    expect(items[0].quality).to.equal(0);
+    expect(items[1].quality).to.equal(0);
+    expect(items[2].quality).to.equal(1);
+    expect(items[3].quality).to.equal(1);
+    expect(items[4].quality).to.equal(45);
+    expect(items[5].quality).to.equal(45);
+    expect(items[6].quality).to.equal(46);
+    expect(items[7].quality).to.equal(46);
+  });
+
+  test("conjured item other than Brie, Backstage passes or Sulfuras; sellIn <= 0; quality == 3; quality decreases by three", () => {
+    const gildedRose = new Shop([
+      new Item("Jar of conjured vatniksoup", 0, 3, true),
+      new Item("Jar of conjured vatniksoup", -1, 3, true),
+    ]);
+    const items = gildedRose.updateQuality();
+    expect(items[0].quality).to.equal(0);
+    expect(items[1].quality).to.equal(0);
+  });
+
+  test("conjured item other than Brie, Backstage passes or Sulfuras; sellIn <= 0; quality == 2; quality decreases by two", () => {
+    const gildedRose = new Shop([
+      new Item("Jar of conjured vatniksoup", 0, 2, true),
+      new Item("Jar of conjured vatniksoup", -1, 2, true),
+    ]);
+    const items = gildedRose.updateQuality();
+    expect(items[0].quality).to.equal(0);
+    expect(items[1].quality).to.equal(0);
+  });
+
+  test("conjured item other than Brie, Backstage passes or Sulfuras; sellIn <= 0; quality == 1; quality decreases by one", () => {
+    const gildedRose = new Shop([
+      new Item("Jar of conjured vatniksoup", 0, 1, true),
+      new Item("Jar of conjured vatniksoup", -1, 1, true),
+    ]);
+    const items = gildedRose.updateQuality();
+    expect(items[0].quality).to.equal(0);
+    expect(items[1].quality).to.equal(0);
+  });
 });
