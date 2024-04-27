@@ -1,2 +1,4 @@
 class Grid:
-  pass
+    
+    def __str__(self):
+        return "."
