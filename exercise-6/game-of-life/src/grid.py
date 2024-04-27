@@ -2,7 +2,7 @@ class Grid:
     def __init__(self, s, width=1, height=1):
         self.width = width
         self.height = height
-        self.grid = [c != "." for c in s]
+        self.grid = [c not in (False, ".") for c in s]
 
     def __str__(self):
         s = []
