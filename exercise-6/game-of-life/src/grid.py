@@ -19,7 +19,11 @@ class Grid:
                 for nb_row, nb_col in self.__generate_neighbours(row, col):
                     if self.curr_grid[nb_row*self.width + nb_col]:
                         live_cell_count += 1
-                if live_cell_count == 0:
+                if live_cell_count in (0, 1):
+                    self.next_grid[row*self.width + col] = False
+                elif live_cell_count == 3:
+                    self.next_grid[row*self.width + col] = True
+                elif live_cell_count == 4:
                     self.next_grid[row*self.width + col] = False
                 else:
                     self.next_grid[row*self.width + col] = self.curr_grid[row*self.width + col]
