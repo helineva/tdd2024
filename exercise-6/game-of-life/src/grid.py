@@ -12,6 +12,15 @@ class Grid:
             if 0 <= row+dy[i] < self.height and 0 <= col+dx[i] < self.width:
                 yield (row+dy[i], col+dx[i])
 
+    def get_grid(self):
+        return self.curr_grid
+    
+    def get_width(self):
+        return self.width
+    
+    def get_height(self):
+        return self.height
+
     def tick(self):
         for row in range(self.height):
             for col in range(self.width):
