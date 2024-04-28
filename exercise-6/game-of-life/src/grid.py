@@ -23,7 +23,7 @@ class Grid:
                     self.next_grid[row*self.width + col] = False
                 elif live_cell_count == 3:
                     self.next_grid[row*self.width + col] = True
-                elif live_cell_count == 4:
+                elif live_cell_count >= 4:
                     self.next_grid[row*self.width + col] = False
                 else:
                     self.next_grid[row*self.width + col] = self.curr_grid[row*self.width + col]

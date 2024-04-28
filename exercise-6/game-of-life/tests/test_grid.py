@@ -123,3 +123,81 @@ def test_dead_cell_with_four_live_neighbours_stays_dead():
     assert str(grid) == (".X..\n" +
                          "X.X.\n" +
                          ".X..\n")
+
+def test_cell_with_five_live_neighbours_will_be_dead():
+    """a live cell with exactly five live neighbours dies
+       a dead cell with exactly five live neighbours stays dead"""
+    seed = ("X.X." +
+            "XXX." +
+            ".X..")
+    grid = Grid(seed, width=4, height=3)
+    grid.tick()
+    assert str(grid) == ("X.X.\n" +
+                         "X.X.\n" +
+                         "XXX.\n")
+
+def test_live_cell_with_six_live_neighbours_dies():
+    """a live cell with exactly six live neighbours dies"""
+    seed = ("XXX." +
+            "XXX." +
+            ".X..")
+    grid = Grid(seed, width=4, height=3)
+    grid.tick()
+    assert str(grid) == ("X.X.\n" +
+                         "....\n" +
+                         "XXX.\n")
+
+def test_dead_cell_with_six_live_neighbours_stays_dead():
+    """a dead cell with exactly six live neighbours stays dead"""
+    seed = ("XXX." +
+            "X.X." +
+            ".X..")
+    grid = Grid(seed, width=4, height=3)
+    grid.tick()
+    assert str(grid) == ("X.X.\n" +
+                         "X.X.\n" +
+                         ".X..\n")
+    
+def test_live_cell_with_seven_live_neighbours_dies():
+    """a live cell with exactly seven live neighbours dies"""
+    seed = ("XXX." +
+            "XXX." +
+            "XX..")
+    grid = Grid(seed, width=4, height=3)
+    grid.tick()
+    assert str(grid) == ("X.X.\n" +
+                         "....\n" +
+                         "X.X.\n")
+    
+def test_dead_cell_with_seven_live_neighbours_stays_dead():
+    """a dead cell with exactly seven live neighbours stays dead"""
+    seed = ("XXX." +
+            "X.X." +
+            "XX..")
+    grid = Grid(seed, width=4, height=3)
+    grid.tick()
+    assert str(grid) == ("X.X.\n" +
+                         "..X.\n" +
+                         "XX..\n")
+    
+def test_live_cell_with_eight_live_neighbours_dies():
+    """a live cell with exactly eight live neighbours dies"""
+    seed = ("XXX." +
+            "XXX." +
+            "XXX.")
+    grid = Grid(seed, width=4, height=3)
+    grid.tick()
+    assert str(grid) == ("X.X.\n" +
+                         "...X\n" +
+                         "X.X.\n")
+    
+def test_dead_cell_with_eight_live_neighbours_stays_dead():
+    """a dead cell with exactly eight live neighbours stays dead"""
+    seed = ("XXX." +
+            "X.X." +
+            "XXX.")
+    grid = Grid(seed, width=4, height=3)
+    grid.tick()
+    assert str(grid) == ("X.X.\n" +
+                         "...X\n" +
+                         "X.X.\n")
