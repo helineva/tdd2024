@@ -201,3 +201,97 @@ def test_dead_cell_with_eight_live_neighbours_stays_dead():
     assert str(grid) == ("X.X.\n" +
                          "...X\n" +
                          "X.X.\n")
+
+def test_2x2_block_does_not_change():
+    """a 2x2 block does not change"""
+    seed = ("...." +
+            ".XX." +
+            ".XX." +
+            "....")
+    grid = Grid(seed, width=4, height=4)
+    grid.tick()
+    assert str(grid) == ("....\n" +
+                         ".XX.\n" +
+                         ".XX.\n" +
+                         "....\n")
+    
+def test_beehive_does_not_change():
+    """a 'beehive' does not change"""
+    seed = ("......" +
+            "..XX.." +
+            ".X..X." +
+            "..XX.." +
+            "......")
+    grid = Grid(seed, width=6, height=5)
+    grid.tick()
+    assert str(grid) == ("......\n" +
+                         "..XX..\n" +
+                         ".X..X.\n" +
+                         "..XX..\n" +
+                         "......\n")
+    
+def test_loaf_does_not_change():
+    """a 'loaf' does not change"""
+    seed = ("......" +
+            "..XX.." +
+            ".X..X." +
+            "..X.X." +
+            "...X.." +
+            "......")
+    grid = Grid(seed, width=6, height=6)
+    grid.tick()
+    assert str(grid) == ("......\n" +
+                         "..XX..\n" +
+                         ".X..X.\n" +
+                         "..X.X.\n" +
+                         "...X..\n" +
+                         "......\n")
+    
+def test_blinker_has_period_of_two():
+    """a 'blinker' has a period of two"""
+    seed = ("....." +
+            "..X.." +
+            "..X.." +
+            "..X.." +
+            ".....")
+    grid = Grid(seed, width=5, height=5)
+    for i in range(10):
+        grid.tick()
+        if i % 2 == 0:
+            assert str(grid) == (".....\n" +
+                                 ".....\n" +
+                                 ".XXX.\n" +
+                                 ".....\n" +
+                                 ".....\n")
+        else:
+            assert str(grid) == (".....\n" +
+                                 "..X..\n" +
+                                 "..X..\n" +
+                                 "..X..\n" +
+                                 ".....\n")
+
+def test_toad_has_period_of_two():
+    """a 'toad' has a periof of two"""
+    seed = ("......" +
+            "...X.." +
+            ".X..X." +
+            ".X..X." +
+            "..X..." +
+            "......")
+    grid = Grid(seed, width=6, height=6)
+    for i in range(10):
+        grid.tick()
+        if i % 2 == 0:
+            assert str(grid) == ("......\n" +
+                                 "......\n" +
+                                 "..XXX.\n" +
+                                 ".XXX..\n" +
+                                 "......\n" +
+                                 "......\n")
+        else:
+            assert str(grid) == ("......\n" +
+                                 "...X..\n" +
+                                 ".X..X.\n" +
+                                 ".X..X.\n" +
+                                 "..X...\n" +
+                                 "......\n")
