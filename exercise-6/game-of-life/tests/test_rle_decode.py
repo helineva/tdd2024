@@ -68,11 +68,56 @@ def test_decode_extended_header_line():
     assert width == 3
     assert height == 4
 
-def test_decode_1x1_dead_cell_pattern():
-    """decodes correctly a pattern consisting of one dead cell"""
+def test_decode_1x1_dead_cell_pattern_without_run_count():
+    """decodes correctly a pattern consisting of one dead cell without explicit run count"""
     s = ("x = 1, y = 1\n" +
          "b!")
     pattern, width, height = decode(s)
     assert pattern == [False]
     assert width == 1
+    assert height == 1
+
+def test_decode_1x1_live_cell_pattern_without_run_count():
+    """decodes correctly a pattern consisting of one dead cell without explicit run count"""
+    s = ("x = 1, y = 1\n" +
+         "o!")
+    pattern, width, height = decode(s)
+    assert pattern == [True]
+    assert width == 1
+    assert height == 1
+
+def test_decode_2x1_pattern_without_run_counts():
+    """decodes correctly a 1x2-pattern consisting of one live and one dead cell without explicit run counts"""
+    s = ("x = 2, y = 1\n" +
+         "ob!")
+    pattern, width, height = decode(s)
+    assert pattern == [True, False]
+    assert width == 2
+    assert height == 1
+
+def test_decode_1x1_dead_cell_pattern_with_run_count():
+    """decodes correctly a pattern consisting of one dead cell with run count"""
+    s = ("x = 1, y = 1\n" +
+         "1b!")
+    pattern, width, height = decode(s)
+    assert pattern == [False]
+    assert width == 1
+    assert height == 1
+
+def test_decode_1x1_live_cell_pattern_with_run_count():
+    """decodes correctly a pattern consisting of one live cell with run count"""
+    s = ("x = 1, y = 1\n" +
+         "1o!")
+    pattern, width, height = decode(s)
+    assert pattern == [True]
+    assert width == 1
+    assert height == 1
+
+def test_decode_2x1_dead_cells_pattern_with_run_count():
+    """decodes correctly a pattern consisting of two dead cells with run count"""
+    s = ("x = 2, y = 1\n" +
+         "2b!")
+    pattern, width, height = decode(s)
+    assert pattern == [False, False]
+    assert width == 2
     assert height == 1

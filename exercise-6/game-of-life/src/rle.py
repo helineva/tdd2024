@@ -20,9 +20,18 @@ def decode(s):
 
     pattern = lines[1]
     decoded = []
+    run_count = None
     for c in pattern:
         if c == "b":
-            decoded.append(False)
+            if not run_count:
+                run_count = 1
+            decoded.extend([False]*run_count)
+        elif c == "o":
+            if not run_count:
+                run_count = 1
+            decoded.extend([True]*run_count)
+        elif c in "0123456789":
+            run_count = int(c)
         elif c == "!":
             break
 
