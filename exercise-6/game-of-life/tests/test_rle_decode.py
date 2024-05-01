@@ -147,3 +147,22 @@ def test_decode_fill_last_incomplete_line_with_dead_cells():
     rle = "3b$o!"
     pattern = __decode_pattern(rle, 3)
     assert pattern == [False, False, False, True, False, False]
+
+def test_decode_zero_run_count():
+    """reports error when zero run count is encountered"""
+    rle = "b0o$!"
+    with pytest.raises(Exception) as exc_info:
+        __decode_pattern(rle, 1)
+    assert exc_info.value.args[0] == "invalid pattern"
+
+    rle = "b0$!"
+    with pytest.raises(Exception) as exc_info:
+        __decode_pattern(rle, 1)
+    assert exc_info.value.args[0] == "invalid pattern"
+
+def test_decode_too_long_pattern_line():
+    """reports error if a too long pattern line is encountered"""
+    rle = "bb$!"
+    with pytest.raises(Exception) as exc_info:
+        __decode_pattern(rle, 1)
+    assert exc_info.value.args[0] == "invalid pattern"
