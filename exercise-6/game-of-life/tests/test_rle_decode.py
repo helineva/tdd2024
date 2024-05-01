@@ -141,4 +141,9 @@ def test_decode_eol_symbols_with_run_count():
     rle = "b2$ob!"
     pattern = __decode_pattern(rle, 2)
     assert pattern == [False, False, False, False, True, False]
-    
+
+def test_decode_fill_last_incomplete_line_with_dead_cells():
+    """fill the last incomplete pattern line with dead cells even without the end-of-line symbol"""
+    rle = "3b$o!"
+    pattern = __decode_pattern(rle, 3)
+    assert pattern == [False, False, False, True, False, False]

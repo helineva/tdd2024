@@ -38,6 +38,8 @@ def __decode_pattern(pattern, width):
                 cell_count = 0
             run_count = None
         elif c == "!":
+            if cell_count > 0:
+                decoded.extend([False]*(width-cell_count))
             break
     
     return decoded
