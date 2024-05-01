@@ -16,18 +16,23 @@ def __decode_header(header):
     
     return (width, height)
 
-def __decode_pattern(pattern):
+def __decode_pattern(pattern, width):
     run_count = None
     decoded = []
+    cell_count = 0
 
     for c in pattern:
         if c in "bo":
             if run_count == None:
                 run_count = 1
             decoded.extend([c == "o"]*run_count)
+            cell_count += run_count
             run_count = None
         elif c in "0123456789":
             run_count = int(c) if run_count == None else 10*run_count + int(c)
+        elif c == "$":
+            decoded.extend([False]*(width-cell_count))
+            cell_count = 0
         elif c == "!":
             break
     
@@ -38,6 +43,6 @@ def decode(s):
     
     width, height = __decode_header(lines[0])
     
-    pattern = __decode_pattern(lines[1])
+    pattern = __decode_pattern(lines[1], width)
 
     return (pattern, width, height)

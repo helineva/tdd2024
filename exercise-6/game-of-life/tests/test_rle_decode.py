@@ -69,54 +69,64 @@ def test_decode_extended_header_line():
 def test_decode_1x1_dead_cell_pattern_without_run_count():
     """decodes correctly a pattern consisting of one dead cell without explicit run count"""
     rle = "b!"
-    pattern = __decode_pattern(rle)
+    pattern = __decode_pattern(rle, 1)
     assert pattern == [False]
 
 def test_decode_1x1_live_cell_pattern_without_run_count():
     """decodes correctly a pattern consisting of one dead cell without explicit run count"""
     rle = "o!"
-    pattern = __decode_pattern(rle)
+    pattern = __decode_pattern(rle, 1)
     assert pattern == [True]
 
 def test_decode_2x1_pattern_without_run_counts():
     """decodes correctly a 1x2-pattern consisting of one live and one dead cell without explicit run counts"""
     rle = "ob!"
-    pattern = __decode_pattern(rle)
+    pattern = __decode_pattern(rle, 2)
     assert pattern == [True, False]
 
 def test_decode_1x1_dead_cell_pattern_with_run_count():
     """decodes correctly a pattern consisting of one dead cell with run count"""
     rle = "1b!"
-    pattern = __decode_pattern(rle)
+    pattern = __decode_pattern(rle, 1)
     assert pattern == [False]
 
 def test_decode_1x1_live_cell_pattern_with_run_count():
     """decodes correctly a pattern consisting of one live cell with run count"""
     rle = "1o!"
-    pattern = __decode_pattern(rle)
+    pattern = __decode_pattern(rle, 1)
     assert pattern == [True]
 
 def test_decode_2x1_dead_cells_pattern_with_run_count():
     """decodes correctly a pattern consisting of two dead cells with run count"""
     rle = "2b!"
-    pattern = __decode_pattern(rle)
+    pattern = __decode_pattern(rle, 2)
     assert pattern == [False, False]
 
 def test_decode_2x1_live_cells_pattern_with_run_count():
     """decodes correctly a pattern consisting of two live cells with run count"""
     rle = "2o!"
-    pattern = __decode_pattern(rle)
+    pattern = __decode_pattern(rle, 2)
     assert pattern == [True, True]
 
 def test_decode_run_of_more_than_nine_cells():
     """decodes correctly a run of more than nine cells"""
     rle = "10o!"
-    pattern = __decode_pattern(rle)
+    pattern = __decode_pattern(rle, 10)
     assert pattern == [True]*10
 
 def test_decode_pattern_of_height_one_without_eol_symbols():
     """decodes correctly patterns of height one without end-of-line symbols"""
     rle = "b2o3o5b12obob10o!"
-    pattern = __decode_pattern(rle)
+    pattern = __decode_pattern(rle, 36)
     assert pattern == [False] + [True]*5 + [False]*5 + [True]*12 + [False, True, False] + [True]*10
+
+def test_decode_fill_end_of_lines_with_dead_cells():
+    """fill end-of-lines with a correct number of dead cells"""
+    rle = "b$!"
+    pattern = __decode_pattern(rle, 1)
+    assert pattern == [False]
+    
+    rle = "o$!"
+    pattern = __decode_pattern(rle, 2)
+    assert pattern == [True, False]
     
