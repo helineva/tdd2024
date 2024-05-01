@@ -130,3 +130,15 @@ def test_decode_fill_end_of_lines_with_dead_cells():
     pattern = __decode_pattern(rle, 2)
     assert pattern == [True, False]
     
+def test_decode_multiple_eol_symbols():
+    """decodes correctly multiple successive end-of-line symbols"""
+    rle = "b$$ob!"
+    pattern = __decode_pattern(rle, 2)
+    assert pattern == [False, False, False, False, True, False]
+
+def test_decode_eol_symbols_with_run_count():
+    """decodes correctly end-of-line symbols with explicit run count"""
+    rle = "b2$ob!"
+    pattern = __decode_pattern(rle, 2)
+    assert pattern == [False, False, False, False, True, False]
+    

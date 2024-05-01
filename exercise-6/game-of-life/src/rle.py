@@ -23,7 +23,7 @@ def __decode_pattern(pattern, width):
 
     for c in pattern:
         if c in "bo":
-            if run_count == None:
+            if run_count is None:
                 run_count = 1
             decoded.extend([c == "o"]*run_count)
             cell_count += run_count
@@ -31,8 +31,12 @@ def __decode_pattern(pattern, width):
         elif c in "0123456789":
             run_count = int(c) if run_count == None else 10*run_count + int(c)
         elif c == "$":
-            decoded.extend([False]*(width-cell_count))
-            cell_count = 0
+            if run_count is None:
+                run_count = 1
+            for _ in range(run_count):
+                decoded.extend([False]*(width-cell_count))
+                cell_count = 0
+            run_count = None
         elif c == "!":
             break
     
