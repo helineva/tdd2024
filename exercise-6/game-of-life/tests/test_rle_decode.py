@@ -1,151 +1,122 @@
 import pytest
-from rle import decode
+from rle import decode, __decode_header, __decode_pattern
 
 def test_decode_correct_header_line():
     """decodes a correct header line"""
-    s = ("x = 4, y = 3\n" +
-         "$$$!")
-    _, width, height = decode(s)
+    header = "x = 4, y = 3"
+    width, height = __decode_header(header)
     assert width == 4
     assert height == 3
 
 def test_decode_invalid_header_line():
     """raises an exception in case of an invalid header"""
-    s = "abc"
+    header = "abc"
     with pytest.raises(Exception) as exc_info:
-        decode(s)
+        __decode_header(header)
     assert exc_info.value.args[0] == "invalid header"
 
 def test_decode_header_line_with_invalid_dimension_not_a_number():
     """raises an exception if width/height is not a number"""
-    s = "x = a9, y = 3"
+    header = "x = a9, y = 3"
     with pytest.raises(Exception) as exc_info:
-        decode(s)
+        __decode_header(header)
     assert exc_info.value.args[0] == "invalid header"
-    s = "x = 4, y = b4"
+    header = "x = 4, y = b4"
     with pytest.raises(Exception) as exc_info:
-        decode(s)
+        __decode_header(header)
     assert exc_info.value.args[0] == "invalid header"
 
 def test_decode_header_line_with_invalid_dimension_decimal_point():
     """raises an exception if width/height contains a decimal point"""
-    s = "x = 2.0, y = 3"
+    header = "x = 2.0, y = 3"
     with pytest.raises(Exception) as exc_info:
-        decode(s)
+        __decode_header(header)
     assert exc_info.value.args[0] == "invalid header"
-    s = "x = 4, y = 1.5"
+    header = "x = 4, y = 1.5"
     with pytest.raises(Exception) as exc_info:
-        decode(s)
+        __decode_header(header)
     assert exc_info.value.args[0] == "invalid header"
 
 def test_decode_header_line_with_invalid_dimension_negative_number():
     """raises an exception if width/height contains a negative number"""
-    s = "x = -1, y = 3"
+    header = "x = -1, y = 3"
     with pytest.raises(Exception) as exc_info:
-        decode(s)
+        __decode_header(header)
     assert exc_info.value.args[0] == "invalid header"
-    s = "x = 4, y = -5"
+    header = "x = 4, y = -5"
     with pytest.raises(Exception) as exc_info:
-        decode(s)
+        __decode_header(header)
     assert exc_info.value.args[0] == "invalid header"
 
 def test_decode_header_line_with_invalid_dimension_zero():
     """raises an exception if width/height contains a zero"""
-    s = "x = 0, y = 3"
+    header = "x = 0, y = 3"
     with pytest.raises(Exception) as exc_info:
-        decode(s)
+        __decode_header(header)
     assert exc_info.value.args[0] == "invalid header"
-    s = "x = 4, y = 0"
+    header = "x = 4, y = 0"
     with pytest.raises(Exception) as exc_info:
-        decode(s)
+        __decode_header(header)
     assert exc_info.value.args[0] == "invalid header"
 
 def test_decode_extended_header_line():
     """decodes an extended header line correctly"""
-    s = ("x = 3, y = 4, rule = abc\n" +
-         "$$$$!")
-    _, width, height = decode(s)
+    header = "x = 3, y = 4, rule = abc"
+    width, height = __decode_header(header)
     assert width == 3
     assert height == 4
 
 def test_decode_1x1_dead_cell_pattern_without_run_count():
     """decodes correctly a pattern consisting of one dead cell without explicit run count"""
-    s = ("x = 1, y = 1\n" +
-         "b!")
-    pattern, width, height = decode(s)
+    rle = "b!"
+    pattern = __decode_pattern(rle)
     assert pattern == [False]
-    assert width == 1
-    assert height == 1
 
 def test_decode_1x1_live_cell_pattern_without_run_count():
     """decodes correctly a pattern consisting of one dead cell without explicit run count"""
-    s = ("x = 1, y = 1\n" +
-         "o!")
-    pattern, width, height = decode(s)
+    rle = "o!"
+    pattern = __decode_pattern(rle)
     assert pattern == [True]
-    assert width == 1
-    assert height == 1
 
 def test_decode_2x1_pattern_without_run_counts():
     """decodes correctly a 1x2-pattern consisting of one live and one dead cell without explicit run counts"""
-    s = ("x = 2, y = 1\n" +
-         "ob!")
-    pattern, width, height = decode(s)
+    rle = "ob!"
+    pattern = __decode_pattern(rle)
     assert pattern == [True, False]
-    assert width == 2
-    assert height == 1
 
 def test_decode_1x1_dead_cell_pattern_with_run_count():
     """decodes correctly a pattern consisting of one dead cell with run count"""
-    s = ("x = 1, y = 1\n" +
-         "1b!")
-    pattern, width, height = decode(s)
+    rle = "1b!"
+    pattern = __decode_pattern(rle)
     assert pattern == [False]
-    assert width == 1
-    assert height == 1
 
 def test_decode_1x1_live_cell_pattern_with_run_count():
     """decodes correctly a pattern consisting of one live cell with run count"""
-    s = ("x = 1, y = 1\n" +
-         "1o!")
-    pattern, width, height = decode(s)
+    rle = "1o!"
+    pattern = __decode_pattern(rle)
     assert pattern == [True]
-    assert width == 1
-    assert height == 1
 
 def test_decode_2x1_dead_cells_pattern_with_run_count():
     """decodes correctly a pattern consisting of two dead cells with run count"""
-    s = ("x = 2, y = 1\n" +
-         "2b!")
-    pattern, width, height = decode(s)
+    rle = "2b!"
+    pattern = __decode_pattern(rle)
     assert pattern == [False, False]
-    assert width == 2
-    assert height == 1
 
 def test_decode_2x1_live_cells_pattern_with_run_count():
     """decodes correctly a pattern consisting of two live cells with run count"""
-    s = ("x = 2, y = 1\n" +
-         "2o!")
-    pattern, width, height = decode(s)
+    rle = "2o!"
+    pattern = __decode_pattern(rle)
     assert pattern == [True, True]
-    assert width == 2
-    assert height == 1
 
 def test_decode_run_of_more_than_nine_cells():
     """decodes correctly a run of more than nine cells"""
-    s = ("x = 10, y = 1\n" +
-         "10o!")
-    pattern, width, height = decode(s)
+    rle = "10o!"
+    pattern = __decode_pattern(rle)
     assert pattern == [True]*10
-    assert width == 10
-    assert height == 1
 
 def test_decode_pattern_of_height_one_without_eol_symbols():
     """decodes correctly patterns of height one without end-of-line symbols"""
-    s = ("x = 35, y = 1\n" +
-         "b2o3o5b12obob10o!")
-    pattern, width, height = decode(s)
+    rle = "b2o3o5b12obob10o!"
+    pattern = __decode_pattern(rle)
     assert pattern == [False] + [True]*5 + [False]*5 + [True]*12 + [False, True, False] + [True]*10
-    assert width == 35
-    assert height == 1    
     
