@@ -121,3 +121,31 @@ def test_decode_2x1_dead_cells_pattern_with_run_count():
     assert pattern == [False, False]
     assert width == 2
     assert height == 1
+
+def test_decode_2x1_live_cells_pattern_with_run_count():
+    """decodes correctly a pattern consisting of two live cells with run count"""
+    s = ("x = 2, y = 1\n" +
+         "2o!")
+    pattern, width, height = decode(s)
+    assert pattern == [True, True]
+    assert width == 2
+    assert height == 1
+
+def test_decode_run_of_more_than_nine_cells():
+    """decodes correctly a run of more than nine cells"""
+    s = ("x = 10, y = 1\n" +
+         "10o!")
+    pattern, width, height = decode(s)
+    assert pattern == [True]*10
+    assert width == 10
+    assert height == 1
+
+def test_decode_pattern_of_height_one_without_eol_symbols():
+    """decodes correctly patterns of height one without end-of-line symbols"""
+    s = ("x = 35, y = 1\n" +
+         "b2o3o5b12obob10o!")
+    pattern, width, height = decode(s)
+    assert pattern == [False] + [True]*5 + [False]*5 + [True]*12 + [False, True, False] + [True]*10
+    assert width == 35
+    assert height == 1    
+    

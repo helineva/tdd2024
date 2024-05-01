@@ -23,15 +23,17 @@ def decode(s):
     run_count = None
     for c in pattern:
         if c == "b":
-            if not run_count:
+            if run_count == None:
                 run_count = 1
             decoded.extend([False]*run_count)
+            run_count = None
         elif c == "o":
-            if not run_count:
+            if run_count == None:
                 run_count = 1
             decoded.extend([True]*run_count)
+            run_count = None
         elif c in "0123456789":
-            run_count = int(c)
+            run_count = int(c) if run_count == None else 10*run_count + int(c)
         elif c == "!":
             break
 
