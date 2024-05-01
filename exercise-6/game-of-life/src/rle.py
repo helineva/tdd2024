@@ -1,7 +1,11 @@
 import re
 
 def decode(s):
-    m = re.match(r'x = (\d+), y = (\d+)$', s)
+
+    lines = s.splitlines()
+    header = lines[0]
+
+    m = re.match(r'x = (\d+), y = (\d+)(?:$|,)', header)
 
     if not m:
         raise Exception("invalid header")
@@ -14,4 +18,12 @@ def decode(s):
     if height == 0:
         raise Exception("invalid header")
 
-    return (None, width, height)
+    pattern = lines[1]
+    decoded = []
+    for c in pattern:
+        if c == "b":
+            decoded.append(False)
+        elif c == "!":
+            break
+
+    return (decoded, width, height)
