@@ -208,3 +208,14 @@ def test_decode_rle_with_whitespace():
     assert pattern == [False, False, True, False, True, True, False, False, True, True, True, True]
     assert width == 4
     assert height == 3
+
+def test_decode_rle_with_comments():
+    """decodes correctly rles with comment lines (starting with #)"""
+    rle = ("# a comment\n" +
+           "# another comment\n" +
+           "x = 4, y = 3\n" +
+           "2bo$2o$4o$!")
+    pattern, width, height = decode(rle)
+    assert pattern == [False, False, True, False, True, True, False, False, True, True, True, True]
+    assert width == 4
+    assert height == 3

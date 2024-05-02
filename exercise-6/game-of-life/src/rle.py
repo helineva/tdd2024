@@ -53,7 +53,7 @@ def __decode_pattern(pattern, width):
     return decoded
 
 def decode(s):
-    lines = s.splitlines()
+    lines = [line for line in s.splitlines() if not line.startswith("#")]
 
     width, height = __decode_header(lines[0])
 
