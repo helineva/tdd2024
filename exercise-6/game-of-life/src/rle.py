@@ -47,14 +47,20 @@ def __decode_pattern(pattern, width):
             if cell_count > 0:
                 decoded.extend([False]*(width-cell_count))
             break
+        else:
+            raise Exception("invalid pattern")
     
     return decoded
 
 def decode(s):
     lines = s.splitlines()
-    
-    width, height = __decode_header(lines[0])
-    
-    pattern = __decode_pattern(lines[1], width)
 
-    return (pattern, width, height)
+    width, height = __decode_header(lines[0])
+
+    pattern = "".join([tag for line in lines[1:] for tag in line.split()])
+    index_end_of_pattern = pattern.find("!")
+    if index_end_of_pattern == -1:
+        raise Exception("invalid pattern")
+    
+    decoded_pattern = __decode_pattern(pattern[:index_end_of_pattern+1], width)
+    return (decoded_pattern, width, height)

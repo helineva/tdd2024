@@ -166,3 +166,45 @@ def test_decode_too_long_pattern_line():
     with pytest.raises(Exception) as exc_info:
         __decode_pattern(rle, 1)
     assert exc_info.value.args[0] == "invalid pattern"
+
+def test_decode_pattern_with_illegal_symbols():
+    """reports error if a symbol other than 0,1,...,9, b, o, $, ! is encountered in pattern"""
+    rle = "b2o$bc!"
+    with pytest.raises(Exception) as exc_info:
+        __decode_pattern(rle, 1)
+    assert exc_info.value.args[0] == "invalid pattern"
+
+    rle = "b2o$\n!"
+    with pytest.raises(Exception) as exc_info:
+        __decode_pattern(rle, 1)
+    assert exc_info.value.args[0] == "invalid pattern"
+
+def test_decode_rle_with_no_end_of_pattern_symbol():
+    """reports error on an rle string without an end-of-pattern symbol """
+    rle = ("x = 4, y = 3\n" +
+           "2bo$2o$4o$")
+    with pytest.raises(Exception) as exc_info:
+        decode(rle)
+    assert exc_info.value.args[0] == "invalid pattern"
+
+def test_decode_multiline_rles():
+    """decodes correctly rles with patterns consisting of multiple lines"""
+    rle = ("x = 4, y = 3\n" +
+           "2bo$\n" +
+           "2o$\n" +
+           "4o$!")
+    pattern, width, height = decode(rle)
+    assert pattern == [False, False, True, False, True, True, False, False, True, True, True, True]
+    assert width == 4
+    assert height == 3
+
+def test_decode_rle_with_whitespace():
+    """decodes correctly rles with whitespace between tags"""
+    rle = ("x = 4, y = 3\n" +
+           "2b o\t$  \n" +
+           "2o$\t\t \n" +
+           "4o \t$ ! ")
+    pattern, width, height = decode(rle)
+    assert pattern == [False, False, True, False, True, True, False, False, True, True, True, True]
+    assert width == 4
+    assert height == 3
