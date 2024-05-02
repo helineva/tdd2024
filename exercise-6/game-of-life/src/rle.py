@@ -63,4 +63,7 @@ def decode(s):
         raise Exception("invalid pattern")
     
     decoded_pattern = __decode_pattern(pattern[:index_end_of_pattern+1], width)
+    if len(decoded_pattern) != width * height:
+        raise Exception("invalid pattern")
+    
     return (decoded_pattern, width, height)

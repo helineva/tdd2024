@@ -187,6 +187,14 @@ def test_decode_rle_with_no_end_of_pattern_symbol():
         decode(rle)
     assert exc_info.value.args[0] == "invalid pattern"
 
+def test_decode_rle_with_incorrect_number_of_cells():
+    """reports error if the decoded pattern contains an incorrect number of cells"""
+    rle = ("x = 4, y = 3\n" +
+           "4b$4o!")
+    with pytest.raises(Exception) as exc_info:
+        decode(rle)
+    assert exc_info.value.args[0] == "invalid pattern"
+
 def test_decode_multiline_rles():
     """decodes correctly rles with patterns consisting of multiple lines"""
     rle = ("x = 4, y = 3\n" +
@@ -219,3 +227,36 @@ def test_decode_rle_with_comments():
     assert pattern == [False, False, True, False, True, True, False, False, True, True, True, True]
     assert width == 4
     assert height == 3
+
+def test_decode_glider():
+    """decodes correctly an rle string describing the 'glider'"""
+    rle = ("#N Glider\n" +
+           "#O Richard K. Guy\n" +
+           "#C The smallest, most common, and first discovered spaceship. Diagonal, has period 4 and speed c/4.\n" +
+           "#C www.conwaylife.com/wiki/index.php?title=Glider\n" +
+           "x = 3, y = 3, rule = B3/S23\n" +
+           "bob$2bo$3o!")
+    pattern, width, height = decode(rle)
+    s = (".X." +
+         "..X" +
+         "XXX")
+    assert pattern == [c == "X" for c in s]
+    assert width == 3
+    assert height == 3
+
+def test_decode_symmetric_scorpion():
+    """decodes correctly an rle string describing the 'symmetric scorpion'"""
+    rle = ("#N Symmetric scorpion\n" +
+           "#C A 16-cell still life.\n" +
+           "#C https://www.conwaylife.com/wiki/index.php?title=Symmetric_scorpion\n" +
+           "x = 7, y = 5, rule = B3/S23\n" +
+           "3bo3b$b5ob$o5bo$obobobo$b2ob2o!")
+    pattern, width, height = decode(rle)
+    s = ("...X..." +
+         ".XXXXX." +
+         "X.....X" +
+         "X.X.X.X" +
+         ".XX.XX.")
+    assert pattern == [c == "X" for c in s]
+    assert width == 7
+    assert height == 5
