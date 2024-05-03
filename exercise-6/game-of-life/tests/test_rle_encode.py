@@ -74,3 +74,10 @@ def test_encode_one_line_patterns_ending_with_dead_cells():
     width = 17
     rle = __encode_pattern(pattern, width)
     assert rle == "b2o3bo!"
+
+def test_encode_two_line_patterns_lines_ending_with_live_cells():
+    """encodes correctly two-line patterns, lines ending with live cells"""
+    pattern = [False] + [True]*3 + [False] + [True]
+    width = 3
+    rle = __encode_pattern(pattern, width)
+    assert rle == "b2o$obo!"
