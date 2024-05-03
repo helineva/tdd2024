@@ -67,3 +67,11 @@ def decode(s):
         raise Exception("invalid pattern")
     
     return (decoded_pattern, width, height)
+
+def __encode_header(width, height):
+    if width <= 0:
+        raise Exception("invalid width")
+    if height <= 0:
+        raise Exception("invalid height")
+    
+    return f"x = {width}, y = {height}"
