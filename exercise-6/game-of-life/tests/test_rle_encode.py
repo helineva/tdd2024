@@ -86,3 +86,97 @@ def test_encode_two_line_patterns_lines_ending_with_live_cells():
     width = 3
     rle = __encode_pattern(pattern, width)
     assert rle == "2bo$obo!"
+
+def test_encode_two_line_patterns_lines_ending_with_dead_cells():
+    """encodes correctly two-line patterns, lines ending with live cells"""
+    pattern = [True] + [False]*2 + [True]*2 + [False]
+    width = 3
+    rle = __encode_pattern(pattern, width)
+    assert rle == "o$2o!"
+
+def test_encode_dead_lines():
+    """encodes correctly dead lines (multiple successive $'s)"""
+    s = ("..." +
+         "...")
+    pattern = [c == "X" for c in s]
+    width = 3
+    rle = __encode_pattern(pattern, width)
+    assert rle == "2$!"
+
+    s = ("XXX" +
+         "...")
+    pattern = [c == "X" for c in s]
+    width = 3
+    rle = __encode_pattern(pattern, width)
+    assert rle == "3o2$!"
+
+    s = ("XX." +
+         "...")
+    pattern = [c == "X" for c in s]
+    width = 3
+    rle = __encode_pattern(pattern, width)
+    assert rle == "2o2$!"
+
+    s = ("X.." +
+         "...")
+    pattern = [c == "X" for c in s]
+    width = 3
+    rle = __encode_pattern(pattern, width)
+    assert rle == "o2$!"
+
+    s = ("XXX" +
+         "..." +
+         "XXX")
+    pattern = [c == "X" for c in s]
+    width = 3
+    rle = __encode_pattern(pattern, width)
+    assert rle == "3o2$3o!"
+
+    s = ("XXX" +
+         "..." +
+         ".XX")
+    pattern = [c == "X" for c in s]
+    width = 3
+    rle = __encode_pattern(pattern, width)
+    assert rle == "3o2$b2o!"
+
+    s = ("XXX" +
+         "..." +
+         "..X")
+    pattern = [c == "X" for c in s]
+    width = 3
+    rle = __encode_pattern(pattern, width)
+    assert rle == "3o2$2bo!"
+    
+    s = ("XX." +
+         "..." +
+         "XXX")
+    pattern = [c == "X" for c in s]
+    width = 3
+    rle = __encode_pattern(pattern, width)
+    assert rle == "2o2$3o!"
+
+    s = ("X.." +
+         "..." +
+         "XXX")
+    pattern = [c == "X" for c in s]
+    width = 3
+    rle = __encode_pattern(pattern, width)
+    assert rle == "o2$3o!"
+
+    s = ("XX." +
+         "..." +
+         ".XX")
+    pattern = [c == "X" for c in s]
+    width = 3
+    rle = __encode_pattern(pattern, width)
+    assert rle == "2o2$b2o!"
+ 
+    s = ("X.." +
+         "..." +
+         "..X")
+    pattern = [c == "X" for c in s]
+    width = 3
+    rle = __encode_pattern(pattern, width)
+    assert rle == "o2$2bo!"
+    

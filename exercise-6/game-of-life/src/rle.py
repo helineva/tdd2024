@@ -79,6 +79,7 @@ def __encode_header(width, height):
 def __encode_pattern(pattern, width):
     rle = []
     run_count = 0
+    line_break_count = 0
     previous = None
     for i, current in enumerate(pattern):
         if previous is None:
@@ -86,24 +87,36 @@ def __encode_pattern(pattern, width):
         elif current == previous:
             run_count += 1
         else:
+            if line_break_count >= 1:
+                if line_break_count == 1:
+                    rle.append("$")
+                else:
+                    rle.append(str(line_break_count))
+                    rle.append("$")
+                line_break_count = 0
             if run_count > 1:
                 rle.append(str(run_count))
             rle.append("o" if previous else "b")
             run_count = 1
         previous = current
-        if i < len(pattern)-1 and (i+1) % width == 0:
+        if (i+1) % width == 0:
             if previous:
+                if line_break_count >= 1:
+                    if line_break_count == 1:
+                        rle.append("$")
+                    else:
+                        rle.append(str(line_break_count))
+                        rle.append("$")
+                    line_break_count = 0
                 if run_count > 1:
                     rle.append(str(run_count))
                 rle.append("o")   
-            rle.append("$")
+            line_break_count += 1
             run_count = 0
             previous = None
             
-
-    if previous:
-        if run_count > 1:
-            rle.append(str(run_count))
-        rle.append("o")   
+    if line_break_count > 1:
+        rle.append(str(line_break_count))
+        rle.append("$")
     rle.append("!")
     return "".join(rle)
