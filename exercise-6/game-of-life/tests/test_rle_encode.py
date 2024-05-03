@@ -1,5 +1,5 @@
 import pytest
-from rle import __encode_header
+from rle import __encode_header, __encode_pattern
 
 def test_encode_header():
     """encodes correctly header line given dimensions"""
@@ -25,3 +25,24 @@ def test_encode_header_nonpositive_height():
     with pytest.raises(Exception) as exc_info:
         __encode_header(4, 0)
     assert exc_info.value.args[0] == "invalid height"
+
+def test_encode_pattern_one_live_cell():
+    """encodes correctly a pattern consisting of one live cell"""
+    pattern = [True]
+    width = 1
+    rle = __encode_pattern(pattern, width)
+    assert rle == "o!"
+
+def test_encode_pattern_dead_live_cell():
+    """encodes correctly a 2x1 pattern consisting of one dead and one live cell"""
+    pattern = [False, True]
+    width = 2
+    rle = __encode_pattern(pattern, width)
+    assert rle == "bo!"
+
+def test_encode_pattern_two_live_cells():
+    """encodes correctly a pattern consisting of two live cells"""
+    pattern = [True, True]
+    width = 2
+    rle = __encode_pattern(pattern, width)
+    assert rle == "2o!"

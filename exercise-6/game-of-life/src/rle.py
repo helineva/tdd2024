@@ -75,3 +75,25 @@ def __encode_header(width, height):
         raise Exception("invalid height")
     
     return f"x = {width}, y = {height}"
+
+def __encode_pattern(pattern, width):
+    rle = []
+    run_count = 0
+    previous = None
+    for c in pattern:
+        if previous is None:
+            run_count = 1
+        elif c == previous:
+            run_count += 1
+        else:
+            if run_count > 1:
+                rle.append(str(run_count))
+            rle.append("o" if previous else "b")
+            run_count = 1
+        previous = c 
+
+    if run_count > 1:
+        rle.append(str(run_count))
+    rle.append("o" if previous else "b")   
+    rle.append("!")
+    return "".join(rle)
