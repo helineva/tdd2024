@@ -46,3 +46,31 @@ def test_encode_pattern_two_live_cells():
     width = 2
     rle = __encode_pattern(pattern, width)
     assert rle == "2o!"
+
+def test_encode_one_line_patterns_ending_with_live_cells():
+    """encodes correctly one-line patterns ending with live cells"""
+    pattern = [False] + [True]*2 + [False]*3 + [True] + [False]*10 + [True]*2
+    width = 19
+    rle = __encode_pattern(pattern, width)
+    assert rle == "b2o3bo10b2o!"
+
+def test_encode_pattern_one_dead_cell():
+    """encodes correctly a pattern consisting of one dead cell"""
+    pattern = [False]
+    width = 1
+    rle = __encode_pattern(pattern, width)
+    assert rle == "!"
+
+def test_encode_pattern_two_dead_cells():
+    """encodes correctly a pattern consisting of two dead cells"""
+    pattern = [False, False]
+    width = 2
+    rle = __encode_pattern(pattern, width)
+    assert rle == "!"
+
+def test_encode_one_line_patterns_ending_with_dead_cells():
+    """encodes correctly one-line patterns ending with live cells"""
+    pattern = [False] + [True]*2 + [False]*3 + [True] + [False]*10
+    width = 17
+    rle = __encode_pattern(pattern, width)
+    assert rle == "b2o3bo!"

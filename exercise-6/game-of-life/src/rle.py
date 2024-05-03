@@ -92,8 +92,9 @@ def __encode_pattern(pattern, width):
             run_count = 1
         previous = c 
 
-    if run_count > 1:
-        rle.append(str(run_count))
-    rle.append("o" if previous else "b")   
+    if previous:
+        if run_count > 1:
+            rle.append(str(run_count))
+        rle.append("o")   
     rle.append("!")
     return "".join(rle)
