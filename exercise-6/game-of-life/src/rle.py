@@ -90,16 +90,16 @@ def __encode_pattern(pattern, width):
                 rle.append(str(run_count))
             rle.append("o" if previous else "b")
             run_count = 1
+        previous = current
         if i < len(pattern)-1 and (i+1) % width == 0:
             if previous:
                 if run_count > 1:
                     rle.append(str(run_count))
-                    rle.append("o")   
+                rle.append("o")   
             rle.append("$")
             run_count = 0
             previous = None
-        else:
-            previous = current
+            
 
     if previous:
         if run_count > 1:
