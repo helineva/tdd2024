@@ -1,5 +1,5 @@
 import pytest
-from rle import __encode_header, __encode_pattern
+from rle import __encode_header, __encode_pattern, encode
 
 def test_encode_header():
     """encodes correctly header line given dimensions"""
@@ -179,4 +179,15 @@ def test_encode_dead_lines():
     width = 3
     rle = __encode_pattern(pattern, width)
     assert rle == "o2$2bo!"
-    
+
+def test_encode_glider():
+    """correctly encodes the 'glider'"""
+    s = (".X." +
+         "..X" +
+         "XXX")
+    pattern = [c == "X" for c in s]
+    width = 3
+    height = 3
+    rle = encode(pattern, width, height)
+    assert rle == ("x = 3, y = 3\n" +
+                   "bo$2bo$3o!\n")
