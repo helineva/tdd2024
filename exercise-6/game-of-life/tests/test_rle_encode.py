@@ -181,7 +181,7 @@ def test_encode_dead_lines():
     assert rle == "o2$2bo!"
 
 def test_encode_glider():
-    """correctly encodes the 'glider'"""
+    """encodes correctly the 'glider'"""
     s = (".X." +
          "..X" +
          "XXX")
@@ -191,3 +191,30 @@ def test_encode_glider():
     rle = encode(pattern, width, height)
     assert rle == ("x = 3, y = 3\n" +
                    "bo$2bo$3o!\n")
+    
+def test_encode_cis_mirrored_worm():
+    """encodes correctly the 'cis-mirrored worm'"""
+    s = (".XX......" +
+         "X.X......" +
+         "X....X..." +
+         ".XXXXX..." +
+         "........." +
+         ".XXXXX..." +
+         "X....X..." +
+         "X.X......" +
+         ".XX......")
+    pattern = [c == "X" for c in s]
+    width = 9
+    height = 9
+    rle = encode(pattern, width, height)
+    assert rle == ("x = 9, y = 9\n" +
+                   "b2o$obo$o4bo$b5o2$b5o$o4bo$obo$b2o!\n")
+    
+def test_encode_pattern_with_incorrect_number_of_cells():
+    """reports error when trying to encode a pattern with an incorrect number of cells"""
+    pattern = [False]*5
+    width = 2
+    height = 2
+    with pytest.raises(Exception) as exc_info:
+        encode(pattern, width, height)
+    assert exc_info.value.args[0] == "invalid pattern"

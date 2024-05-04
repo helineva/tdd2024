@@ -115,6 +115,10 @@ def __encode_pattern(pattern, width):
     return "".join(rle)
 
 def encode(pattern, width, height):
+    if len(pattern) != width*height:
+        raise Exception("invalid pattern")
+    
     header = __encode_header(width, height)
     rle = __encode_pattern(pattern, width)
+    
     return header + "\n" + rle + "\n"
