@@ -190,7 +190,7 @@ def test_encode_glider():
     height = 3
     rle = encode(pattern, width, height)
     assert rle == ("x = 3, y = 3\n" +
-                   "bo$2bo$3o!\n")
+                   "bo$2bo$3o!")
     
 def test_encode_cis_mirrored_worm():
     """encodes correctly the 'cis-mirrored worm'"""
@@ -208,7 +208,7 @@ def test_encode_cis_mirrored_worm():
     height = 9
     rle = encode(pattern, width, height)
     assert rle == ("x = 9, y = 9\n" +
-                   "b2o$obo$o4bo$b5o2$b5o$o4bo$obo$b2o!\n")
+                   "b2o$obo$o4bo$b5o2$b5o$o4bo$obo$b2o!")
     
 def test_encode_pattern_with_incorrect_number_of_cells():
     """reports error when trying to encode a pattern with an incorrect number of cells"""
@@ -218,3 +218,14 @@ def test_encode_pattern_with_incorrect_number_of_cells():
     with pytest.raises(Exception) as exc_info:
         encode(pattern, width, height)
     assert exc_info.value.args[0] == "invalid pattern"
+
+def test_encode_line_breaks():
+    """line breaks are added at tag boundaries when line length exceeds the maximum length (70 characters)"""
+    pattern = [False, True]*34 + [False]*10 + [True, False]*34 + [True]
+    width = 147
+    height = 1
+    rle = encode(pattern, width, height)
+    assert rle == ("x = 147, y = 1\n" +
+                   "bo"*34 + "\n" +
+                   "10b" + "ob"*33 + "o\n" +
+                   "bo!")

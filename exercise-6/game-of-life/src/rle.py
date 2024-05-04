@@ -1,5 +1,7 @@
 import re
 
+MAX_LINE_LENGTH = 70
+
 def __decode_header(header):
     m = re.match(r'x = (\d+), y = (\d+)(?:$|,)', header)
 
@@ -120,5 +122,15 @@ def encode(pattern, width, height):
     
     header = __encode_header(width, height)
     rle = __encode_pattern(pattern, width)
+
+    lines = [header]
+    s = rle
+    while len(s) > MAX_LINE_LENGTH:
+        i = MAX_LINE_LENGTH - 1
+        while s[i] not in "bo$":
+            i -= 1
+        lines.append(s[:i+1])
+        s = s[i+1:]
+    lines.append(s)
     
-    return header + "\n" + rle + "\n"
+    return "\n".join(lines)
