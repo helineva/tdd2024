@@ -2,6 +2,11 @@ import grid
 import rle
 
 def play(input_file, gen, output_file):
+    if not input_file.is_file():
+        raise Exception("input file does not exist")
+    if output_file.is_file():
+        raise Exception("output file already exists")
+
     with open(input_file, "r") as f:
         input_rle = f.read()
     
